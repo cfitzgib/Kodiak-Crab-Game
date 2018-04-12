@@ -31,7 +31,7 @@ class Oocytes(models.Model):
 
     # method to call Crab model to increment done_oocyte once chosen_count reaches desired accuracy 
 
-    # method to check if  done_oocyte already incremented once for this instance of Oocyte, 
+    # method to check if done_oocyte already incremented once for this instance of Oocyte, 
     # then increment chosen_count but not done_oocyte
 
 class Intermediate(models.Model):
