@@ -70,7 +70,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'KodiakSite.wsgi.application'
 
-MEDIA_ROOT = '/home/media'
+MEDIA_ROOT = '/Users/heramiao/Documents/Junior Year Semester 2/67-373/KodiakSite/media'
 MEDIA_URL = '/media/'
 
 

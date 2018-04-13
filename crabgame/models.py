@@ -22,8 +22,8 @@ class Crab(models.Model):
 
 class Image(models.Model):
     crab = models.ForeignKey(Crab, on_delete = models.CASCADE) # when crab is deleted, images are deleted
-    original_img = models.ImageField(upload_to='uploads/crab.id', height_field=486, width_field=648) 
-    binarized_img = models.ImageField(upload_to='uploads/crab.id', height_field=486, width_field=648)
+    original_img = models.ImageField(upload_to='uploads/' + str(Crab.crab.id))
+    binarized_img = models.ImageField(upload_to='uploads/' + str(Crab.crab.id))
     csv = models.CharField(max_length = 100)
 
 class Oocyte(models.Model):
