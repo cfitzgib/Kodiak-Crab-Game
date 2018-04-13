@@ -70,6 +70,9 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'KodiakSite.wsgi.application'
 
+MEDIA_ROOT = '/home/media'
+MEDIA_URL = '/media/'
+
 
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases

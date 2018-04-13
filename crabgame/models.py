@@ -1,11 +1,12 @@
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.utils import timezone
+import datetime
 
 # Create your models here.
 class Crab(models.Model):
     done_oocytes = models.IntegerField(default = 0, validators = [MaxValueValidator(10)])
-    year = models.IntegerField()
+    year = models.IntegerField(default = datetime.date.today().year)
     longitude = models.FloatField()
     latitude = models.FloatField()
     water_temp = models.FloatField() 
@@ -21,14 +22,15 @@ class Crab(models.Model):
 
 class Image(models.Model):
     crab = models.ForeignKey(Crab, on_delete = models.CASCADE) # when crab is deleted, images are deleted
-    original_img = models.CharField(max_length = 50)
-    binarized_img = models.CharField(max_length = 50)
+    original_img = models.ImageField(upload_to='uploads/crab.id', height_field=486, width_field=648) 
+    binarized_img = models.ImageField(upload_to='uploads/crab.id', height_field=486, width_field=648)
+    csv = models.CharField(max_length = 100)
 
 class Oocyte(models.Model):
     crab = models.ForeignKey(Crab, on_delete = models.CASCADE)
     image = models.ForeignKey(Image, on_delete = models.CASCADE)
     chosen_count = models.IntegerField(default = 0) # how many times an oocyte has been clicked by others
-    area = models.IntegerField(default = 0)
+    area = models.IntegerField()
     center_x = models.FloatField()
     center_y = models.FloatField()
 
