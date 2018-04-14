@@ -1,7 +1,9 @@
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.utils import timezone
+from django.core.files import File
 import datetime
+import os
 
 # Create your models here.
 class Crab(models.Model):
@@ -11,6 +13,26 @@ class Crab(models.Model):
     longitude = models.FloatField()
     latitude = models.FloatField()
     water_temp = models.FloatField() 
+
+    @classmethod
+    def create_image_instances(cls, sn, yr, lon, lat, wt):
+        crab = Crab(sample_num=sn, year=yr, longitude=lon, latitude=lat, water_temp = wt)
+        
+        path = 'D:/School/67-373 IS Consulting Project/crab_images/' + str(crab.sample_num)
+        crab.save()
+
+        #image = Image(crab.id, path + '/oocyte_resized.png', path + '/oocyte_labeled.png', path + '/oocyte_area.csv')
+        
+        csv = "oocyte_area.csv"
+        orig = File(open(path + '/oocyte_resized.png', 'rb'))
+        label = File(open(path + '/oocyte_labeled.png', 'rb'))
+        image = Image(crab=crab, csv = csv)
+        image.original_img.save("orig.png", orig, save=False)
+        image.binarized_img.save("label.png", label, save=False)
+        print(image.original_img)
+        image.save()
+        
+
 
     def __str__(self):
         return str((self.done_oocytes, self.year, self.longitude, self.latitude, self.water_temp))
@@ -26,13 +48,10 @@ def get_upload_path(instance, filename):
 
 class Image(models.Model):
     crab = models.ForeignKey(Crab, on_delete = models.CASCADE) # when crab is deleted, images are deleted
-<<<<<<< HEAD
-    original_img = models.ImageField(upload_to='uploads/crab.id')
-    binarized_img = models.ImageField(upload_to='uploads/crab.id')
-=======
+
     original_img = models.ImageField(upload_to=get_upload_path)
     binarized_img = models.ImageField(upload_to=get_upload_path)
->>>>>>> upstream/master
+
     csv = models.CharField(max_length = 100)
 
 class Oocyte(models.Model):
