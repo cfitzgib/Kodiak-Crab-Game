@@ -2,6 +2,7 @@ from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.utils import timezone
 import datetime
+import os
 
 # Create your models here.
 class Crab(models.Model):
@@ -13,7 +14,7 @@ class Crab(models.Model):
     water_temp = models.FloatField() 
 
     def __str__(self):
-        return str((self.done_oocytes, self.year, self.longitude, self.latitude, self.water_temp))
+        return str((self.sample_num, self.done_oocytes, self.year, self.longitude, self.latitude, self.water_temp))
 
     # method to increment the crab's done_oocyte once chosen_count reaches desired accuracy --> if conditional
 
