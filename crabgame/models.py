@@ -5,6 +5,7 @@ import datetime
 
 # Create your models here.
 class Crab(models.Model):
+    sample_num = models.IntegerField(default = 0)
     done_oocytes = models.IntegerField(default = 0, validators = [MaxValueValidator(10)])
     year = models.IntegerField(default = datetime.date.today().year)
     longitude = models.FloatField()
@@ -20,10 +21,13 @@ class Crab(models.Model):
 
     # if done_oocytes reaches 10, method to delete all instances of Oocytes that do not have chosen_count 10
 
+def get_upload_path(instance, filename):
+    return '{0}/{1}'.format(instance.crab.sample_num, filename)
+
 class Image(models.Model):
     crab = models.ForeignKey(Crab, on_delete = models.CASCADE) # when crab is deleted, images are deleted
-    original_img = models.ImageField(upload_to='uploads/' + str(Crab.crab.id))
-    binarized_img = models.ImageField(upload_to='uploads/' + str(Crab.crab.id))
+    original_img = models.ImageField(upload_to=get_upload_path)
+    binarized_img = models.ImageField(upload_to=get_upload_path)
     csv = models.CharField(max_length = 100)
 
 class Oocyte(models.Model):
@@ -57,5 +61,41 @@ class Intermediate(models.Model):
     oocyte = models.ForeignKey(Oocyte, on_delete = models.CASCADE)
     session = models.ForeignKey(PlaySession, on_delete = models.CASCADE) # need to fix later!!!!
     schoolClass = models.ForeignKey(SchoolClass, on_delete = models.CASCADE)
+
+
+from django.dispatch import receiver
+
+@receiver(models.signals.post_delete, sender=Image)
+def auto_delete_file_on_delete(sender, instance, **kwargs):
+    """
+    Deletes file from filesystem
+    when corresponding `MediaFile` object is deleted.
+    """
+    if instance.original_img:
+        if os.path.isfile(instance.original_img.path):
+            os.remove(instance.original_img.path)
+            os.remove(instance.binarized_img.path)
+
+@receiver(models.signals.pre_save, sender=Image)
+def auto_delete_file_on_change(sender, instance, **kwargs):
+    """
+    Deletes old file from filesystem
+    when corresponding `MediaFile` object is updated
+    with new file.
+    """
+    if not instance.pk:
+        return False
+
+    try:
+        old_file1 = Image.objects.get(pk=instance.pk).original_img
+        old_file2 = Image.objects.get(pk=instance.pk).binarized_img
+    except Image.DoesNotExist:
+        return False
+
+    new_file1 = instance.original_img
+    if not (old_file1 == new_file1):
+        if os.path.isfile(old_file1.path):
+            os.remove(old_file1.path)
+            os.remove(old_file2.path)
 
 
