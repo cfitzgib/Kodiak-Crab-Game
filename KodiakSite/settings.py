@@ -70,7 +70,12 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'KodiakSite.wsgi.application'
 
+<<<<<<< HEAD
 MEDIA_ROOT = '/d/school/67-373 IS Consulting Project/crabgame/media'
+=======
+ENV_PATH = os.path.abspath(os.path.dirname(__file__))
+MEDIA_ROOT = os.path.join(ENV_PATH, 'media/')
+>>>>>>> upstream/master
 MEDIA_URL = '/media/'
 
 
