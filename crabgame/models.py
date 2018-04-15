@@ -4,7 +4,10 @@ from django.utils import timezone
 from django.core.files import File
 import datetime
 import os
+<<<<<<< HEAD
 import csv
+=======
+>>>>>>> upstream/master
 
 # Create your models here.
 class Crab(models.Model):
@@ -56,7 +59,7 @@ class Crab(models.Model):
 
 
     def __str__(self):
-        return str((self.done_oocytes, self.year, self.longitude, self.latitude, self.water_temp))
+        return str((self.sample_num, self.done_oocytes, self.year, self.longitude, self.latitude, self.water_temp))
 
     # method to increment the crab's done_oocyte once chosen_count reaches desired accuracy --> if conditional
 
