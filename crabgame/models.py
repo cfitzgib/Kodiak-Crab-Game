@@ -4,6 +4,7 @@ from django.utils import timezone
 from django.core.files import File
 import datetime
 import os
+import csv
 
 # Create your models here.
 class Crab(models.Model):
@@ -18,20 +19,36 @@ class Crab(models.Model):
     def create_image_instances(cls, sn, yr, lon, lat, wt):
         crab = Crab(sample_num=sn, year=yr, longitude=lon, latitude=lat, water_temp = wt)
         
+        #This path would be where all the images are stored locally before upload
         path = 'D:/School/67-373 IS Consulting Project/crab_images/' + str(crab.sample_num)
         crab.save()
 
         #image = Image(crab.id, path + '/oocyte_resized.png', path + '/oocyte_labeled.png', path + '/oocyte_area.csv')
-        
-        csv = "oocyte_area.csv"
-        orig = File(open(path + '/oocyte_resized.png', 'rb'))
-        label = File(open(path + '/oocyte_labeled.png', 'rb'))
-        image = Image(crab=crab, csv = csv)
-        image.original_img.save("orig.png", orig, save=False)
-        image.binarized_img.save("label.png", label, save=False)
-        print(image.original_img)
-        image.save()
-        
+        for filename in os.listdir(path):
+            #look for a resized image and then find its labeled counterpart
+            if(filename[-12:] == "_resized.png"):
+                #tag is the identifier for that image
+                tag = filename[:-12]
+                
+                #open both original and resized
+                orig = File(open(path + '/' + tag + '_resized.png', 'rb'))
+                label = File(open(path + '/' + tag + '_labeled.png', 'rb'))
+
+                data = tag + "_area.csv"
+
+                #create Image instance and save images to the media root directory
+                image = Image(crab=crab, csv = data)
+                image.original_img.save(tag + "_resize.png", orig, save=False)
+                image.binarized_img.save(tag + "_label.png", label, save=False)
+                print(image.original_img)
+                image.save()
+
+                #read csv for image and import new oocyte instances
+                with open(path + '/' + data, 'r', newline='') as csvfile:
+                    areareader = csv.reader(csvfile, delimiter = ',', quotechar = '|')
+                    for row in areareader:
+                        area, xcenter, ycenter = row[0], row[1], row[2]
+                        Oocyte.objects.create(crab=crab, image = image, area = area, center_x = xcenter, center_y = ycenter)
 
 
     def __str__(self):
