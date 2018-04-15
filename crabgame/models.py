@@ -15,11 +15,14 @@ class Crab(models.Model):
     latitude = models.FloatField()
     water_temp = models.FloatField() 
 
+    #creates a new crab, finds all of its images and adds them to the system
+    #also imports oocyte instances for each image
     @classmethod
     def create_image_instances(cls, sn, yr, lon, lat, wt):
         crab = Crab(sample_num=sn, year=yr, longitude=lon, latitude=lat, water_temp = wt)
         
         #This path would be where all the images are stored locally before upload
+        #Python script should be pushing images to this path along with its csv file
         path = 'D:/School/67-373 IS Consulting Project/crab_images/' + str(crab.sample_num)
         crab.save()
 
@@ -44,6 +47,7 @@ class Crab(models.Model):
                 image.save()
 
                 #read csv for image and import new oocyte instances
+                #csv must be located in the original path directory where the images were stored
                 with open(path + '/' + data, 'r', newline='') as csvfile:
                     areareader = csv.reader(csvfile, delimiter = ',', quotechar = '|')
                     for row in areareader:
