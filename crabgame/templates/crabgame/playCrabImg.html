@@ -1,25 +1,30 @@
-<!-- <!DOCTYPE html>
-<html>
+{% load static %}
+
 
 <head>
-    <link rel="stylesheet" type="text/css" href="styles.css"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'crabgame/styles.css' %}" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 </head>
 
 <body>
 
-<h1>You are looking at an image of crab {{ displayImg.crab.sample_num }}</h1>
-<img id="original" src="/media/{{ displayImg.crab.sample_num }}/original1.png" style="width:550px"/>
-<img id="binarized" src="/media/{{ displayImg.crab.sample_num }}/binarized1.png" style="width:550px"/>
+    <h1>You are looking at an image of crab {{ displayImg.crab.sample_num }}</h1>
+    <div id="images">
+        <img id="original" src="/media/{{ displayImg.crab.sample_num }}/original1.png" style="width:580px"/>
+        <img id="binarized" src="/media/{{ displayImg.crab.sample_num }}/binarized1.png" style="width:580px"/>
+    </div>
+
+    <script>
+
+        $(document).ready(function() {
+            $("#binarized").on("click", function(event) {
+                var x = event.pageX - this.offsetLeft;
+                var y = event.pageY - this.offsetTop;
+                alert("X Coordinate: " + x + " Y Coordinate: " + y);
+            });
+        });
+    
+    </script>
 
 </body>
-
-</html> -->
-
-{% load static %}
-
-<link rel="stylesheet" type="text/css" href="{% static 'crabgame/styles.css' %}" />
-
-<h1>You are looking at an image of crab {{ displayImg.crab.sample_num }}</h1>
-<img id="original" src="/media/{{ displayImg.crab.sample_num }}/original1.png" style="width:550px"/>
-<img id="binarized" src="/media/{{ displayImg.crab.sample_num }}/binarized1.png" style="width:550px"/>
 
