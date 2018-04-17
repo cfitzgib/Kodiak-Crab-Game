@@ -1,17 +1,25 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html>
 
 <head>
+    <link rel="stylesheet" type="text/css" href="styles.css"/>
+</head>
 
 <body>
 
 <h1>You are looking at an image of crab {{ displayImg.crab.sample_num }}</h1>
-<img src="/media/{{ displayImg.crab.sample_num }}/original1.png"/>
-<img src="/media/{{ displayImg.crab.sample_num }}/binarized1.png"/>
-
+<img id="original" src="/media/{{ displayImg.crab.sample_num }}/original1.png" style="width:550px"/>
+<img id="binarized" src="/media/{{ displayImg.crab.sample_num }}/binarized1.png" style="width:550px"/>
 
 </body>
 
-</head>
+</html> -->
 
-</html>
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'crabgame/styles.css' %}" />
+
+<h1>You are looking at an image of crab {{ displayImg.crab.sample_num }}</h1>
+<img id="original" src="/media/{{ displayImg.crab.sample_num }}/original1.png" style="width:550px"/>
+<img id="binarized" src="/media/{{ displayImg.crab.sample_num }}/binarized1.png" style="width:550px"/>
+
