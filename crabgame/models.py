@@ -5,20 +5,14 @@ from django.core.files import File
 import datetime
 import random
 import os
-<<<<<<< HEAD
 import csv
 
-=======
-#<<<<<<< HEAD
-import csv
-#=======
-#>>>>>>> upstream/master
->>>>>>> upstream/master
 
 # Create your models here.
 class Crab(models.Model):
     sample_num = models.IntegerField(default = 0)
     done_oocytes = models.IntegerField(default = 0, validators = [MaxValueValidator(10)])
+    total_img_instances = models.IntegerField(default = 000)
     year = models.IntegerField(default = datetime.date.today().year)
     longitude = models.FloatField()
     latitude = models.FloatField()
