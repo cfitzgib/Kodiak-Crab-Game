@@ -6,13 +6,13 @@ import datetime
 import random
 import os
 import csv
+import re
 
 
 # Create your models here.
 class Crab(models.Model):
     sample_num = models.IntegerField(default = 0)
     done_oocytes = models.IntegerField(default = 0, validators = [MaxValueValidator(10)])
-    total_img_instances = models.IntegerField(default = 000)
     year = models.IntegerField(default = datetime.date.today().year)
     longitude = models.FloatField()
     latitude = models.FloatField()
@@ -57,7 +57,6 @@ class Crab(models.Model):
                         area, xcenter, ycenter = row[0], row[1], row[2]
                         Oocyte.objects.create(crab=crab, image = image, area = area, center_x = xcenter, center_y = ycenter)
 
-
     def __str__(self):
         return str((self.sample_num, self.done_oocytes, self.year, self.longitude, self.latitude, self.water_temp))
 
@@ -77,6 +76,11 @@ class Image(models.Model):
     binarized_img = models.ImageField(upload_to=get_upload_path)
 
     csv = models.CharField(max_length = 100)
+
+    def get_img_num(self):
+        file = self.original_img.name
+        img_num = file[10:13]
+        return img_num
 
 class Oocyte(models.Model):
     crab = models.ForeignKey(Crab, on_delete = models.CASCADE)

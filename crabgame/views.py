@@ -5,6 +5,7 @@ import random
 
 # Create your views here.
 
+# if start start button clicked, create instance of PlaySession and get 12 random photos to play 
 def index(request):
     if request.method == 'POST':
         playSessionInstance = PlaySession()
