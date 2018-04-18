@@ -103,11 +103,9 @@ class PlaySession(models.Model):
     # method to end PlaySession when completed_photos is incremented to equal num_photos
 
     # method to increment completed_photos 
+    
 
-    # create an image array with random images when user shows up, loop through that array to display images
-    # call playCrabImg??
-
-    # create a list 
+    # create a list of 12 photos with random images for user to play when PlaySession instance is created
     def setPhotos():
         allCrabs = list(Crab.objects.all())
         crabList = random.sample(allCrabs, 4) # pick 4 random crabs per PlaySession 
@@ -117,7 +115,7 @@ class PlaySession(models.Model):
             playImg = random.sample(images, 3) # pick 3 random images from each crab
             for j in range (0, len(playImg)):
                 photos.append(playImg[j])
-        return array(photos)
+        return photos
 
 class SchoolClass(models.Model):
     className = models.CharField(max_length = 100)

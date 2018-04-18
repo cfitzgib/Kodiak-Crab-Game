@@ -2,6 +2,7 @@
 
 <link rel="stylesheet" type="text/css" href="{% static 'crabgame/styles.css' %}" />
 
-<button id="start">Start Game</button>
+<form method="post" action="">{% csrf_token %}
+<button id="start" type="submit">Start Game</button>
 
 <!-- when click, trigger function to create an instance of a PlaySession -->
