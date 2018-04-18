@@ -103,10 +103,10 @@ class PlaySession(models.Model):
     # method to end PlaySession when completed_photos is incremented to equal num_photos
 
     # method to increment completed_photos 
-    
+
 
     # create a list of 12 photos with random images for user to play when PlaySession instance is created
-    def setPhotos():
+    def setPhotos(self):
         allCrabs = list(Crab.objects.all())
         crabList = random.sample(allCrabs, 4) # pick 4 random crabs per PlaySession 
         photos = []
