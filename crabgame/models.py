@@ -5,10 +5,15 @@ from django.core.files import File
 import datetime
 import random
 import os
+<<<<<<< HEAD
+import csv
+
+=======
 #<<<<<<< HEAD
 import csv
 #=======
 #>>>>>>> upstream/master
+>>>>>>> upstream/master
 
 # Create your models here.
 class Crab(models.Model):
