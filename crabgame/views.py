@@ -6,7 +6,7 @@ import random
 # Create your views here.
 
 def index(request):
-    return HttpResponse("Hello, world. You're at the Crab Game index.")
+    return render(request, 'crabgame/index.html')
 
 def playCrabImg(request, crab_sample):
     getCrab = Crab.objects.get(sample_num = crab_sample) # get a crab with a specified sample num

@@ -3,6 +3,7 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 from django.utils import timezone
 from django.core.files import File
 import datetime
+import random
 import os
 #<<<<<<< HEAD
 import csv
@@ -95,12 +96,28 @@ class Oocyte(models.Model):
 
 
 class PlaySession(models.Model):
-    num_photos = models.IntegerField(default = 10) # assume 10 photos per game session for now
+    num_photos = models.IntegerField(default = 12) # assume 12 photos per game session for now
+    #photos = models.ArrayField(max_length = num_photos)
     completed_photos = models.IntegerField(default = 0)
 
     # method to end PlaySession when completed_photos is incremented to equal num_photos
 
     # method to increment completed_photos 
+
+    # create an image array with random images when user shows up, loop through that array to display images
+    # call playCrabImg??
+
+    # create a list 
+    def setPhotos():
+        allCrabs = list(Crab.objects.all())
+        crabList = random.sample(allCrabs, 4) # pick 4 random crabs per PlaySession 
+        photos = []
+        for i in range (0, len(crabList)):
+            images = list(crabList[i].image_set.all()) # look at all images from one crab of crabList
+            playImg = random.sample(images, 3) # pick 3 random images from each crab
+            for j in range (0, len(playImg)):
+                photos.append(playImg[j])
+        return array(photos)
 
 class SchoolClass(models.Model):
     className = models.CharField(max_length = 100)
