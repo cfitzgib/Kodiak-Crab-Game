@@ -13,7 +13,7 @@ def index(request):
         photos = playSessionInstance.setPhotos()
         for i in range (0, len(photos)):
             displayImg = photos[i]
-            return render(request, 'crabgame/playCrabImg.html', {'displayImg': displayImg})
+            return render(request, 'crabgame/playCrabImg.html', {'photos': photos})
     return render(request, 'crabgame/index.html')
 
 

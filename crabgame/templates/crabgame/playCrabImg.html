@@ -8,13 +8,23 @@
 
 <body>
 
-    <h1>You are looking at an image of crab {{ displayImg.crab.sample_num }}</h1>
-    <div id="images">
-        <img id="original" src="/media/{{ displayImg.crab.sample_num }}/untitled{{ displayImg.get_img_num }}_resize.png"/>
-        <img id="binarized" src="/media/{{ displayImg.crab.sample_num }}/untitled{{ displayImg.get_img_num }}_label.png"/>
-    </div>
+    {% for photo in photos %}
+
+        <h1>You are looking at an image of crab {{ photo.crab.sample_num }}</h1>
+        <div id="images">
+            <img id="original" src="/media/{{ photo.crab.sample_num }}/untitled{{ photo.get_img_num }}_resize.png"/>
+            <img id="binarized" src="/media/{{ photo.crab.sample_num }}/untitled{{ photo.get_img_num }}_label.png"/>
+        </div>
+
+        <button id="next">Next</button>
+
+    {% endfor %}
 
     <script>
+
+        function nextImg() {
+            
+        }
 
         $(document).ready(function() {
             $("#binarized").on("click", function(event) {
@@ -23,6 +33,8 @@
                 alert("X Coordinate: " + x + " Y Coordinate: " + y);
             });
         });
+
+        document.getElementById("next").addEventListener("click", nextImg);
     
     </script>
 
