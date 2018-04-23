@@ -7,6 +7,8 @@ import random
 import os
 import csv
 import re
+import math
+
 
 
 # Create your models here.
@@ -87,6 +89,24 @@ class Image(models.Model):
     def __str__(self):
         return ("image (pk=" + str(self.id) + ")")
 
+    #Given a click position, finds which of an image's
+    #oocytes are closest and returns that oocyte
+    def find_closest_oocyte(self, xclick, yclick):
+        oocytes = Oocyte.objects.filter(image=self.id)
+        pt = (float(xclick),float(yclick))
+        min_dist = -1
+        mindex = -1
+        for idx, oocyte in enumerate(oocytes):
+            oocyte_center = (oocyte.center_x, oocyte.center_y)
+            dist = distance(pt, oocyte_center)
+            if(dist < min_dist or min_dist == -1):
+                min_dist = dist
+                mindex = idx
+        return oocytes[mindex]
+
+def distance(p0, p1):
+    return math.sqrt((p0[0] - p1[0])**2 + (p0[1] - p1[1])**2)
+
 class Oocyte(models.Model):
     crab = models.ForeignKey(Crab, on_delete = models.CASCADE)
     image = models.ForeignKey(Image, on_delete = models.CASCADE)
@@ -106,7 +126,7 @@ class Oocyte(models.Model):
 
 
 class PlaySession(models.Model):
-    num_photos = models.IntegerField(default = 12) # assume 12 photos per game session for now
+    num_photos = models.IntegerField(default = 8) # assume 12 photos per game session for now
     #photos = models.ArrayField(max_length = num_photos)
     completed_photos = models.IntegerField(default = 0)
 
@@ -124,7 +144,7 @@ class PlaySession(models.Model):
         photos = []
         for i in range (0, len(crabList)):
             images = list(crabList[i].image_set.all()) # look at all images from one crab of crabList
-            playImg = random.sample(images, 3) # pick 3 random images from each crab
+            playImg = random.sample(images, 2) # pick 3 random images from each crab
             for j in range (0, len(playImg)):
                 photos.append(playImg[j])
         return photos
