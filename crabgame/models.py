@@ -11,7 +11,8 @@ import re
 
 # Create your models here.
 class Crab(models.Model):
-    sample_num = models.IntegerField(default = 0)
+    sample_num = models.IntegerField(default = 0) # used to find the crab image
+    # number of oocytes that reached more than 10 clicks
     done_oocytes = models.IntegerField(default = 0, validators = [MaxValueValidator(10)])
     year = models.IntegerField(default = datetime.date.today().year)
     longitude = models.FloatField()
@@ -26,7 +27,7 @@ class Crab(models.Model):
         
         #This path would be where all the images are stored locally before upload
         #Python script should be pushing images to this path along with its csv file
-        path = 'D:/School/67-373 IS Consulting Project/crab_images/' + str(crab.sample_num)
+        path = '/Users/heramiao/Documents/Junior Year Semester 2/67-373/KodiakSite/crab_images/' + str(crab.sample_num)
         crab.save()
 
         #image = Image(crab.id, path + '/oocyte_resized.png', path + '/oocyte_labeled.png', path + '/oocyte_area.csv')
@@ -58,7 +59,8 @@ class Crab(models.Model):
                         Oocyte.objects.create(crab=crab, image = image, area = area, center_x = xcenter, center_y = ycenter)
 
     def __str__(self):
-        return str((self.sample_num, self.done_oocytes, self.year, self.longitude, self.latitude, self.water_temp))
+        return ("crab (pk=" + str(self.id) + ", sample_num=" + str(self.sample_num) + ")")
+        #return str((self.sample_num, self.done_oocytes, self.year, self.longitude, self.latitude, self.water_temp))
 
     # method to increment the crab's done_oocyte once chosen_count reaches desired accuracy --> if conditional
 
@@ -71,16 +73,19 @@ def get_upload_path(instance, filename):
 
 class Image(models.Model):
     crab = models.ForeignKey(Crab, on_delete = models.CASCADE) # when crab is deleted, images are deleted
-
+    # path of the original and binarized image
     original_img = models.ImageField(upload_to=get_upload_path)
     binarized_img = models.ImageField(upload_to=get_upload_path)
-
+    # string of the csv file name
     csv = models.CharField(max_length = 100)
 
     def get_img_num(self):
         file = self.original_img.name
         img_num = file[10:13]
         return img_num
+
+    def __str__(self):
+        return ("image (pk=" + str(self.id) + ")")
 
 class Oocyte(models.Model):
     crab = models.ForeignKey(Crab, on_delete = models.CASCADE)
@@ -90,6 +95,8 @@ class Oocyte(models.Model):
     center_x = models.FloatField()
     center_y = models.FloatField()
 
+    def __str__(self):
+        return ("oocyte (pk=" + str(self.id) + ")")
     # method to increment chosen_count each time somebody clicks on a particular oocyte
 
     # method to call Crab model to increment done_oocyte once chosen_count reaches desired accuracy 
@@ -99,13 +106,15 @@ class Oocyte(models.Model):
 
 
 class PlaySession(models.Model):
-    num_photos = models.IntegerField(default = 12) # assume 12 photos per game session for now
+    num_photos = models.IntegerField(default = 8) # assume 12 photos per game session for now
     #photos = models.ArrayField(max_length = num_photos)
     completed_photos = models.IntegerField(default = 0)
 
     # method to end PlaySession when completed_photos is incremented to equal num_photos
 
-    # method to increment completed_photos 
+    # method to increment completed_photos
+    def __str__(self):
+        return ("playSession (pk=" + str(self.id) + ")")
 
 
     # create a list of 12 photos with random images for user to play when PlaySession instance is created
@@ -115,7 +124,7 @@ class PlaySession(models.Model):
         photos = []
         for i in range (0, len(crabList)):
             images = list(crabList[i].image_set.all()) # look at all images from one crab of crabList
-            playImg = random.sample(images, 3) # pick 3 random images from each crab
+            playImg = random.sample(images, 2) # pick 3 random images from each crab
             for j in range (0, len(playImg)):
                 photos.append(playImg[j])
         return photos
@@ -123,10 +132,16 @@ class PlaySession(models.Model):
 class SchoolClass(models.Model):
     className = models.CharField(max_length = 100)
 
+    def __str__(self):
+        return ("schoolClass (pk=" + str(self.id) + ")")
+
 class Intermediate(models.Model):
     oocyte = models.ForeignKey(Oocyte, on_delete = models.CASCADE)
     session = models.ForeignKey(PlaySession, on_delete = models.CASCADE) # need to fix later!!!!
     schoolClass = models.ForeignKey(SchoolClass, on_delete = models.CASCADE)
+
+    def __str__(self):
+        return ("schoolClass (pk=" + str(self.id) + ")")
 
 
 from django.dispatch import receiver

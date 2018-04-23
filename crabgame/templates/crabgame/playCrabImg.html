@@ -1,42 +1,88 @@
 {% load static %}
-
-
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <link rel="stylesheet" type="text/css" href="{% static 'crabgame/styles.css' %}" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Kodiak Crab Game</title>
+
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="{% static 'crabgame/css/materialize.css' %}" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="{% static 'crabgame/css/style.css' %}" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 </head>
 
 <body>
+    <!-- Navigation Bar -->
+    <nav class="white" role="navigation">
+      <div class="nav-wrapper container">
+        <a id="logo-container" href="{% url 'crabgame:index' %}" class="brand-logo">Kodiak-Crab</a>
+        <ul class="right hide-on-med-and-down">
+          <li><a href="#">About Us</a></li>
+        </ul>
 
-    {% for photo in photos %}
+        <ul id="nav-mobile" class="sidenav">
+          <li><a href="#">About Us</a></li>
+        </ul>
+        <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+      </div>
+    </nav>
 
-        <h1>You are looking at an image of crab {{ photo.crab.sample_num }}</h1>
-        <div id="images">
-            <img id="original" src="/media/{{ photo.crab.sample_num }}/untitled{{ photo.get_img_num }}_resize.png"/>
-            <img id="binarized" src="/media/{{ photo.crab.sample_num }}/untitled{{ photo.get_img_num }}_label.png"/>
+    <!-- Display first image of crab -->
+    <div id="firstImg">
+      <h4>You are looking at an image of crab {{ photo1.crab.sample_num }}</h4>
+      <div class="row">
+        <div class="col s6 m6 l6">
+          <img id="original" src="/media/{{ photo1.crab.sample_num }}/untitled{{ photo1.get_img_num }}_resize.png" />
         </div>
+        <div class="col s6 m6 l6">
+          <img id="binarized" src="/media/{{ photo1.crab.sample_num }}/untitled{{ photo1.get_img_num }}_label.png"/>
+        </div>
+      </div>
+      <a class="waves-effect waves-light btn" id="next" href="{% url 'crabgame:result' photo1.id %}">Next ></a>
+    </div>
 
-        <button id="next">Next</button>
+    <!-- Display next images of crabs --> 
+    <div id="nextImg" style="display:none;">
+      <h4>You are looking at an image of crab {{ photos[i].crab.sample_num }}</h4>
+      <div class="row">
+        <div class="col s6 m6 l6">
+          <img id="originalNxt" src="/media/{{ photos[i].crab.sample_num }}/untitled{{ photos[i].get_img_num }}_resize.png" />
+        </div>
+        <div class="col s6 m6 l6">
+          <img id="binarizedNxt" src="/media/{{ photos[i].crab.sample_num }}/untitled{{ photos[i].get_img_num }}_label.png"/>
+        </div>
+      </div>
+      <a class="waves-effect waves-light btn" id="next" href="{% url 'crabgame:result' photos[i].id %}">Next ></a>
+    </div>
 
-    {% endfor %}
+  <!--  Scripts -->
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="{% static 'crabgame/js/materialize.js' %}"></script>
+  <script src="{% static 'crabgame/js/init.js' %}"></script>
+  <script>
 
-    <script>
+    function nextImg() {
+      i++;
+    }
 
-        function nextImg() {
-            
-        }
-
-        $(document).ready(function() {
-            $("#binarized").on("click", function(event) {
-                var x = event.pageX - this.offsetLeft;
-                var y = event.pageY - this.offsetTop;
-                alert("X Coordinate: " + x + " Y Coordinate: " + y);
-            });
+    $(document).ready(function() {
+        $("#binarized").on("click", function(event) {
+            var x = event.pageX - this.offsetLeft;
+            var y = event.pageY - this.offsetTop;
+            var xy_data = {'x':x, 'y':y};
+            $.post("detail", xy_data, null)
+            alert("X Coordinate: " + x + " Y Coordinate: " + y);
         });
 
-        document.getElementById("next").addEventListener("click", nextImg);
-    
-    </script>
+        $("#next").click(function (){
+          $("#nextImg").show();
+          $("$firstImg").hide();
+        });
+    });
+    document.getElementById("next").addEventListener("click", nextImg);
+  </script>
 
 </body>
 
