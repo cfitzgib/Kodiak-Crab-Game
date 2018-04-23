@@ -1,3 +1,177 @@
 {% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Kodiak Crab Game</title>
 
-<link rel="stylesheet" type="text/css" href="{% static 'crabgame/styles.css' %}" />
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="{% static 'crabgame/css/materialize.css' %}" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="{% static 'crabgame/css/style.css' %}" type="text/css" rel="stylesheet" media="screen,projection"/>
+</head>
+<body>
+  <nav class="white" role="navigation">
+    <div class="nav-wrapper container">
+      <a id="logo-container" href="{% url 'crabgame:index' %}" class="brand-logo">Kodiak-Crab</a>
+      <ul class="right hide-on-med-and-down">
+        <li><a href="#">About Us</a></li>
+      </ul>
+
+      <ul id="nav-mobile" class="sidenav">
+        <li><a href="#">About Us</a></li>
+      </ul>
+      <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+    </div>
+  </nav>
+
+  <div id="index-banner" class="parallax-container">
+    <div class="section no-pad-bot">
+      <div class="container">
+        <br><br>
+        <h1 class="header center teal-text text-lighten-2">Kodiak Crab Game</h1>
+        <div class="row center">
+          <h5 class="header col s12 light">Harness the power of crowdsourcing to change the landscape of marine science</h5>
+        </div>
+        <div class="row center">
+          <!-- when button clicked, trigger function to create instance of a PlaySession -->
+          <form method="post" action="">{% csrf_token %}
+          <button id="download-button" class="btn-large waves-effect" type="submit">Start Game</button>
+        </div>
+        <br><br>
+
+      </div>
+    </div>
+    <div class="parallax"><img src="{% static 'crabgame/background1.jpg' %}" alt="Unsplashed background img 1"></div>
+  </div>
+
+
+  <div class="container">
+    <div class="section">
+
+      <!--   Icon Section   -->
+      <div class="row">
+        <div class="col s12 m4">
+          <div class="icon-block">
+            <h2 class="center brown-text"><i class="material-icons">flash_on</i></h2>
+            <h5 class="center">Easy to Start</h5>
+
+            <p class="light">See two images of crab oocytes side-by-side, with the original image on the left
+            and the binarized image on the right. Click on the darkest and biggest oocyte and the system will
+            help you identify which one you clicked automatically.</p>
+          </div>
+        </div>
+
+        <div class="col s12 m4">
+          <div class="icon-block">
+            <h2 class="center brown-text"><i class="material-icons">group</i></h2>
+            <h5 class="center">Scoreboard Results</h5>
+
+            <p class="light">Check out how many oocytes you have identified compared to peers in your class. 
+            Play more sessions to earn achievements and also find out information about the crabs you 
+            interacted with, where they are from and what crabs they are.</p>
+          </div>
+        </div>
+
+        <div class="col s12 m4">
+          <div class="icon-block">
+            <h2 class="center brown-text"><i class="material-icons">settings</i></h2>
+            <h5 class="center">Marine Science</h5>
+
+            <p class="light">Make contributions to the field of marine science by helping identify information
+            on crab oocytes. Join the ongoing research where we explore the reproduction cycle of crabs and 
+            gain insights on how many crabs to capture each year.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <div class="parallax-container valign-wrapper">
+    <div class="section no-pad-bot">
+      <div class="container">
+        <div class="row center">
+          <h5 class="header col s12 light">Be A Part Of The Ongoing Study Of Marine Science</h5>
+        </div>
+      </div>
+    </div>
+    <div class="parallax"><img src="{% static 'crabgame/background2.jpg' %}" alt="Unsplashed background img 2"></div>
+  </div>
+
+  <div class="container">
+    <div class="section">
+
+      <div class="row">
+        <div class="col s12 center">
+          <h3><i class="mdi-content-send brown-text"></i></h3>
+          <h4>Contact Us</h4>
+          <p class="left-align light">We are a group of information systems students in Carnegie Mellon University
+          and we are working on an IS consulting project. Our clients are the Kodiak School District and the Kodiak
+          Research Laboratory. Our goal is to find a more efficient way to help scientists identify information of 
+          crab oocytes like its area and also harness the power of crowdsourcing by developing a game where students
+          can contribute to analysis process by playing the game and also gain educational rewards in the process.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <div class="parallax-container valign-wrapper">
+    <div class="section no-pad-bot">
+      <div class="container">
+        <div class="row center">
+          <h5 class="header col s12 light">Identify Crab Oocytes in this fun and interactive game</h5>
+        </div>
+      </div>
+    </div>
+    <div class="parallax"><img src="{% static 'crabgame/background3.jpg' %}" alt="Unsplashed background img 3"></div>
+  </div>
+
+  <footer class="page-footer teal">
+    <div class="container">
+      <div class="row">
+        <div class="col l6 s12">
+          <h5 class="white-text">Company Bio</h5>
+          <p class="grey-text text-lighten-4">We are a team of information systems students working on the IS 67373 project. You can support us by playing our game or contacting us directly through email.</p>
+
+
+        </div>
+        <div class="col l3 s12">
+          <h5 class="white-text">Settings</h5>
+          <ul>
+            <li><a class="white-text" href="#!">Link 1</a></li>
+            <li><a class="white-text" href="#!">Link 2</a></li>
+            <li><a class="white-text" href="#!">Link 3</a></li>
+            <li><a class="white-text" href="#!">Link 4</a></li>
+          </ul>
+        </div>
+        <div class="col l3 s12">
+          <h5 class="white-text">Connect</h5>
+          <ul>
+            <li><a class="white-text" href="#!">Link 1</a></li>
+            <li><a class="white-text" href="#!">Link 2</a></li>
+            <li><a class="white-text" href="#!">Link 3</a></li>
+            <li><a class="white-text" href="#!">Link 4</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-copyright">
+      <div class="container">
+      Made by <a class="brown-text text-lighten-3" href="http://materializecss.com">Materialize</a>
+      </div>
+    </div>
+  </footer>
+
+
+  <!--  Scripts-->
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="{% static 'crabgame/js/materialize.js' %}"></script>
+  <script src="{% static 'crabgame/js/init.js' %}"></script>
+
+  </body>
+</html>

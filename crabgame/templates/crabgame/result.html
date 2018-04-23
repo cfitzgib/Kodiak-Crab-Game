@@ -1,0 +1,57 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Kodiak Crab Game</title>
+
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="{% static 'crabgame/css/materialize.css' %}" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="{% static 'crabgame/css/style.css' %}" type="text/css" rel="stylesheet" media="screen,projection"/>
+</head>
+<body>
+  <nav class="white" role="navigation">
+    <div class="nav-wrapper container">
+      <a id="logo-container" href="{% url 'crabgame:index' %}" class="brand-logo">Kodiak-Crab</a>
+      <ul class="right hide-on-med-and-down">
+        <li><a href="#">About Us</a></li>
+      </ul>
+
+      <ul id="nav-mobile" class="sidenav">
+        <li><a href="#">About Us</a></li>
+      </ul>
+      <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+    </div>
+  </nav>
+
+  <div id="index-banner" class="parallax-container">
+    <div class="section no-pad-bot">
+      <div class="container">
+        <br><br>
+        <h1 class="header center teal-text text-lighten-2">Kodiak Crab Game</h1>
+        <div class="row center">
+          <h5 class="header col s12 light">Congratulations. You have completed a round.</h5>
+        </div>
+        <div class="row center">
+          <!-- when button clicked, trigger function to create instance of a PlaySession -->
+          <form method="post" action="">{% csrf_token %}
+          <button id="download-button" class="btn-large waves-effect" type="submit">Play Again</button>
+        </div>
+        <br><br>
+
+      </div>
+    </div>
+    <div class="parallax"><img src="{% static 'crabgame/background1.jpg' %}" alt="Unsplashed background img 1"></div>
+  </div>
+
+
+  
+  <!--  Scripts-->
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="{% static 'crabgame/js/materialize.js' %}"></script>
+  <script src="{% static 'crabgame/js/init.js' %}"></script>
+
+  </body>
+</html>
