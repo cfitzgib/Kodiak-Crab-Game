@@ -73,7 +73,11 @@
             <img id="binarized{{idx}}" src="/media/{{ photo.crab.sample_num }}/untitled{{ photo.get_img_num }}_label.png"/>
           </div>
           <input type="hidden" id= "img{{idx}}" name="{{photo.pk}}" value="{{ photo.pk }}" />
-          <a class="waves-effect waves-light btn" id="next" onclick= "nextImg()">Next</a>
+          {% if idx < 7 %}
+            <a class="waves-effect waves-light btn" id="next" onclick= "nextImg()">Next</a>
+          {% else %}
+            <a class="waves-effect waves-light btn" id="next" href="{% url 'crabgame:result' photo.id %}">Submit</a>
+          {% endif %}
         </div>
         
     {% endfor %}
@@ -83,11 +87,6 @@
   <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
   <script src="{% static 'crabgame/js/materialize.js' %}"></script>
   <script src="{% static 'crabgame/js/init.js' %}"></script>
-
-  <script>
-    var photos = "{{photos}}";
-    document.getElementById("next").addEventListener("click", nextImg);
-  </script>
 
 </body>
 

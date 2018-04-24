@@ -1,10 +1,23 @@
 var i = 0;
+
+//Get the next image and submit all of the oocytes from the last image
 function nextImg() {
   i++;
+  for(let j = 0; j < clicked.length; j++){
+    $.ajax({
+          url: 'ajax/up_oocyte/',
+          data: {
+            'id': clicked[j][2]
+          }
+    });
+    $('#block' + Math.floor(clicked[j][0])).remove();
+  }
+  clicked = [];
   if(i<8)
     hide_inactive_images();
 }
 
+//Hide all of the inactive divs and only show current one
 function hide_inactive_images(){
   for(let j = 0; j < 8; j++){
     if(j != i)
@@ -14,6 +27,7 @@ function hide_inactive_images(){
   }
 }
 
+//Hide the divs to start off
 $(document).ready(function() {
   hide_inactive_images();
 });
@@ -40,7 +54,7 @@ $(document).ready(function() {
           //On click, place a dot at center
           //to provide feedback
           success: function(data){
-            var pt = [data.xcenter, data.ycenter];
+            var pt = [data.xcenter, data.ycenter, data.id];
             var undone = -1;
             //Only add to clicked if it hasn't been
             //selected before

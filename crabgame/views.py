@@ -25,8 +25,13 @@ def find_oocyte(request):
     photoid = request.GET.get('photoid')
     photo = Image.objects.get(pk=photoid)
     clicked_oocyte = photo.find_closest_oocyte(x, y)
-    resp = { 'xcenter': clicked_oocyte.center_x, 'ycenter': clicked_oocyte.center_y }
+    resp = { 'xcenter': clicked_oocyte.center_x, 'ycenter': clicked_oocyte.center_y, 'id': clicked_oocyte.id }
     return HttpResponse(json.dumps(resp), content_type="application/json")
+
+def increment_oocyte(request):
+    oocyte_id = request.GET.get('id')
+    Oocyte.objects.get(pk=oocyte_id).increment_chosen_count()
+    return HttpResponse()
      
 # view the image of a certain crab and click on the oocytes in the image
 def detail(request, image_id):
