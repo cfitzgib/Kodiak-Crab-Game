@@ -29,72 +29,70 @@
     </div>
   </nav>
 
-  <div class="section no-pad-bot" id="index-banner">
-    <div class="cyan darken-3">
-      <br><br>
-      <h1 class="header center">Name of Crab Game??</h1>
-      <br>
-      <div class="row center">
+  <div id="startScreen" class="cyan darken-3">
+    <br><br>
+    <h1 class="header center">Name of Crab Game??</h1>
+    <br>
+    <div class="row center">
         <h5 class="header col s12 light">Help the Kodiak Fisheries Research Center analyze crabs collected from the Bering Sea</h5>
-      </div>
-      <br><br>
-      <div class="row center">
+    </div>
+    <br><br>
+    <div class="row center">
         <!-- when button clicked, trigger function to create instance of a PlaySession -->
         <form method="post" action="">{% csrf_token %}
         <button id="download-button" class="btn-large waves-effect orange darken-3" type="submit">Get Started</button>
-      </div>
-      <br><br>
-    </div>
-  </div>
-
-
-  <div class="orange lighten-5">
-    <div class="section">
-
-    <br>
-
-      <div class="row">
-        <div class="col s12">
-          <div class="icon-block">
-            <h5 class="center">Crab Game Progress Bar</h5>
-
-            <p class="light">We did most of the heavy lifting for you to provide a default stylings that incorporate our custom components. Additionally, we refined animations and transitions to provide a smoother experience for developers.</p>
-          </div>
-        </div>
-
-        <div class="col s12 m6">
-          <div class="icon-block">
-            <h5 class="center">About Crab Game</h5>
-            <p class="light">By utilizing elements and principles of Material Design, we were able to create a framework that incorporates components and animations that provide more feedback to users. Additionally, a single underlying responsive system across all platforms allow for a more unified user experience.</p>
-          </div>
-        </div>
-
-        <div class="col s12 m6">
-          <div class="icon-block">
-            <h5 class="center">Images</h5>
-            <p class="light">We have provided detailed documentation as well as specific code examples to help new users get started. We are also always open to feedback and can answer any questions a user may have about Materialize.</p>
-          </div>
-        </div>
-      </div>
-
     </div>
     <br><br>
   </div>
 
+  <div class="orange lighten-5">
+  <br><br>
+  <div id="content" class="orange lighten-5">
+    <div class="row">
+        <div class="col s12">
+            <div id="progress">
+                <h5 class="center">Crab Game Progress Bar</h5>
+                <p class="light">We did most of the heavy lifting for you to provide a default stylings that incorporate our custom components. Additionally, we refined animations and transitions to provide a smoother experience for developers.</p>
+            </div>
+        </div>
+    </div>
+
+    <br>
+
+    <div id="about" class="row">
+        <div class="col s12 m6">
+            <div id="aboutGame">
+                <h5 class="center">About Crab Game</h5>
+                <p class="light">By utilizing elements and principles of Material Design, we were able to create a framework that incorporates components and animations that provide more feedback to users. Additionally, a single underlying responsive system across all platforms allow for a more unified user experience.</p>
+            </div>
+        </div>
+
+        <div class="col s12 m6">
+            <div id="images">
+                <h5 class="center">Images</h5>
+                <p class="light">We have provided detailed documentation as well as specific code examples to help new users get started. We are also always open to feedback and can answer any questions a user may have about Materialize.</p>
+            </div>
+        </div>
+    </div> 
+  </div> 
+  <br><br>
+  </div>
+
   <footer class="page-footer amber darken-1">
-    <div class="container">
-      <div class="row">
+      <div class="row" id="contactRow">
         <div class="col l6 s12">
+        <div id="creators">
           <h5 class="white-text">The Creators</h5>
           <p class="grey-text text-lighten-4">
               This game was made by a 67-373 student team within the Carnegie Mellon University Information Systems Program. 
               67-373 is an IS Consulting Project course where students have 13 weeks to consult with a client to design, 
               build, and deliver a technology solution which meets their needs. 
           </p>
-
-
         </div>
+        </div>
+
         <div class="col l3 s12">
+        <div id="contactNames">
           <h5 class="white-text">Contact Us</h5>
           <ul>
             <li>Connor Fitzgibbon</li>
@@ -105,21 +103,24 @@
             <li><a class="white-text" href="https://www.cmu.edu/information-systems/">CMU IS Program</a></li>
           </ul>
         </div>
+        </div>
+
         <div class="col l3 s12">
-            <br><br>
+        <div id="contactEmail">
+        <br><br>
           <ul>
             <li><a class="white-text" href="mailto:cfitzgib@andrew.cmu.edu">cfitzgib@andrew.cmu.edu</a></li>
             <li><a class="white-text" href="mailto:heram@andrew.cmu.edu">heram@andrew.cmu.edu</a></li>
             <li><a class="white-text" href="mailto:ruiquzhu@andrew.cmu.edu">ruiquzhu@andrew.cmu.edu</a></li>
           </ul>
         </div>
+        </div>
       </div>
-    </div>
+
     <div class="footer-copyright">
       <div class="container">
       Made by <a class="orange-text text-lighten-3" href="http://materializecss.com">Materialize</a>
       </div>
-    </div>
   </footer>
 
 

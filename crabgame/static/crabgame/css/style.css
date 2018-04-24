@@ -14,9 +14,18 @@
 }
 
 nav {
-  height: 100px;
+  height: 110px;
 }
 
-body {
-  margin: 100px !important;
+#startScreen {
+  height: 535px;
+}
+
+#content {
+  margin-right: 75px;
+  margin-left: 75px;
+}
+
+#contactRow {
+  margin: 50px;
 }
