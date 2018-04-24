@@ -1,26 +1,34 @@
 var i = 0;
 function nextImg() {
   i++;
-  console.log("i");
-  if (i == 9) {
-    document.write("Game Over");
-    return;
+  if(i<8)
+    hide_inactive_images();
+}
+
+function hide_inactive_images(){
+  for(let j = 0; j < 8; j++){
+    if(j != i)
+      $("#image" + j).hide();
+    else
+      $("#image" + j).show();
   }
-  else {
-    var photo = photos[i];
-    document.getElementById("originalNxt").setAttribute("src", "media/"{{photo.crab.sample_num}}"/untitled"{{photo.get_img_num }}"_resize.png");
-    document.getElementById("binarizedNxt").setAttribute("src", "media/"{{photo.crab.sample_num }}"/untitled"{{ photo.get_img_num }}"_label.png")
-  }
-};
+}
+
+$(document).ready(function() {
+  hide_inactive_images();
+});
+
 
 var clicked = [];
 $(document).ready(function() {
-    $("#binarized").on("click", function(event) {
+  //Attach a handler to each of the images for when they become visible
+  for(let k = 0; k< 8; k++){
+    $("#binarized"+k).on("click", function(event) {
         var offsetL = this.offsetLeft;
         var offsetT = this.offsetTop;
         var x = event.pageX - offsetL;
         var y = event.pageY - offsetT;
-        var photo = $("#img0").val();
+        var photo = $("#img" + k).val();
         $.ajax({
           url: 'ajax/find_oocyte/',
           dataType: "json",
@@ -36,11 +44,6 @@ $(document).ready(function() {
             var undone = -1;
             //Only add to clicked if it hasn't been
             //selected before
-            /*clicked.forEach(function(element){
-              console.log(element)
-              if(element[0] == pt[0] && element[1] == pt[1])
-                undone = true;
-            })*/
             for(let i = 0; i<clicked.length; i++){
               element = clicked[i];
               if(element[0] == pt[0] && element[1] == pt[1])
@@ -69,22 +72,12 @@ $(document).ready(function() {
             else{
               var div = '#block' + Math.floor(data.xcenter);
               clicked.splice(undone, 1);
-              console.log(clicked);
-              console.log("divs: " + $(div).length);
               $(div).toggle();
             }
-            console.log(clicked);
-            console.log(undone);
           }
         });
     });
-
-
-    $("#next").click(function (){
-      $("#firstImg").hide();
-      $("#nextImg").show();
-      nextImg();
-    });
+  }
 });
 
 
