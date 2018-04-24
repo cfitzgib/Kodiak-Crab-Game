@@ -11,6 +11,7 @@
   <link href="{% static 'crabgame/css/materialize.css' %}" type="text/css" rel="stylesheet" media="screen,projection"/>
   <link href="{% static 'crabgame/css/style.css' %}" type="text/css" rel="stylesheet" media="screen,projection"/>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="{% static 'crabgame/js/javascript.js' %}"></script>
 </head>
 
 <body>
@@ -29,71 +30,58 @@
       </div>
     </nav>
 
-    <!-- Display images from photos array -->
-    <div id="displayImg">
-      <h4>You are looking at an image of crab {{ photo.crab.sample_num }}</h4>
+    <!-- Display first image of crab -->
+    <div id="firstImg">
       <div class="row">
         <div class="col s6 m6 l6">
-          <img id="original" src="/media/{{ photo.crab.sample_num }}/untitled{{ photo.get_img_num }}_resize.png" />
+          <img id="original" src="/media/{{ photo1.crab.sample_num }}/untitled{{ photo1.get_img_num }}_resize.png" />
         </div>
         <div class="col s6 m6 l6">
-          <img id="binarized" src="/media/{{ photo.crab.sample_num }}/untitled{{ photo.get_img_num }}_label.png"/>
+          <img id="binarized" src="/media/{{ photo1.crab.sample_num }}/untitled{{ photo1.get_img_num }}_label.png"/>
         </div>
       </div>
-      <a class="waves-effect waves-light btn" id="next" href="{% url 'crabgame:result' photo.id %}">Next ></a>
+      <button id="next" onclick="nextImg()">Next ></button>
     </div>
 
-    <!-- Display next images of crabs from photos array --> 
+    <!-- Display next images of crabs --> 
     <div id="nextImg" style="display:none;">
-      <h4>You are looking at an image of crab {{ nextImg.crab.sample_num }}</h4>
       <div class="row">
         <div class="col s6 m6 l6">
-          <img id="originalNxt" src="/media/{{ nextImg.crab.sample_num }}/untitled{{ nextImg.get_img_num }}_resize.png" />
+          <img id="originalNxt"/>
         </div>
         <div class="col s6 m6 l6">
-          <img id="binarizedNxt" src="/media/{{ nextImg.crab.sample_num }}/untitled{{ nextImg.get_img_num }}_label.png"/>
+          <img id="binarizedNxt"/>
         </div>
       </div>
-      <a class="waves-effect waves-light btn" id="next" href="{% url 'crabgame:result' nextImg.id %}">Next ></a>
+      <button id="next" onclick="nextImg()">Next ></button>
     </div>
+
+    <!-- Display images of crabs --> 
+    {% for idx, photo in photos %}
+        <h4>You are looking at an image of crab {{ photo.crab.sample_num }}</h4>
+        <div class="row">
+          <div class="col s6 m6 l6">
+            <img id="original" src="/media/{{ photo.crab.sample_num }}/untitled{{ photo.get_img_num }}_resize.png"/>
+          </div>
+          <div class="col s6 m6 l6">
+            <img id="binarized" src="/media/{{ photo.crab.sample_num }}/untitled{{ photo.get_img_num }}_label.png"/>
+          </div>
+        </div>
+        <input type="hidden" id= "img{{idx}}" name="{{photo.pk}}" value="{{ photo.pk }}" />
+        <a class="waves-effect waves-light btn" id="next" href="{% url 'crabgame:result' photo.id %}">Next</a>
+    {% endfor %}
+
 
   <!--  Scripts -->
   <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
   <script src="{% static 'crabgame/js/materialize.js' %}"></script>
   <script src="{% static 'crabgame/js/init.js' %}"></script>
+
   <script>
-
-    function nextImg() {
-      i++;
-      if (i == 9) {
-        document.write("Game over");
-        return;
-      }
-      else {
-        photo = photos[i];
-        return photo;
-      } 
-    };
-
-    $(document).ready(function() {
-        $("#binarized").on("click", function(event) {
-            var x = event.pageX - this.offsetLeft;
-            var y = event.pageY - this.offsetTop;
-            var xy_data = {'x':x, 'y':y};
-            $.post("detail", xy_data, null)
-            alert("X Coordinate: " + x + " Y Coordinate: " + y);
-        });
-        
-        var i = 0;
-        $("#next").click(function (){
-          $("#nextImg").show();
-          $("$firstImg").hide();
-        });
-    });
-
-    document.getElementById("#next").addEventListener("click", nextImg());
-
+    var photos = "{{photos}}";
+    document.getElementById("next").addEventListener("click", nextImg);
   </script>
 
 </body>
 
+</html>
