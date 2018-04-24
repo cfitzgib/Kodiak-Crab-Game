@@ -10,10 +10,8 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link href="{% static 'crabgame/css/materialize.css' %}" type="text/css" rel="stylesheet" media="screen,projection"/>
   <link href="{% static 'crabgame/css/style.css' %}" type="text/css" rel="stylesheet" media="screen,projection"/>
-</head>
-
-<head>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="{% static 'crabgame/js/javascript.js' %}"></script>
 </head>
 
 <body>
@@ -31,6 +29,33 @@
         <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
       </div>
     </nav>
+
+    <!-- Display first image of crab -->
+    <div id="firstImg">
+      <div class="row">
+        <div class="col s6 m6 l6">
+          <img id="original" src="/media/{{ photo1.crab.sample_num }}/untitled{{ photo1.get_img_num }}_resize.png" />
+        </div>
+        <div class="col s6 m6 l6">
+          <img id="binarized" src="/media/{{ photo1.crab.sample_num }}/untitled{{ photo1.get_img_num }}_label.png"/>
+        </div>
+      </div>
+      <button id="next" onclick="nextImg()">Next ></button>
+    </div>
+
+    <!-- Display next images of crabs --> 
+    <div id="nextImg" style="display:none;">
+      <div class="row">
+        <div class="col s6 m6 l6">
+          <img id="originalNxt"/>
+        </div>
+        <div class="col s6 m6 l6">
+          <img id="binarizedNxt"/>
+        </div>
+      </div>
+      <button id="next" onclick="nextImg()">Next ></button>
+    </div>
+
     <!-- Display images of crabs --> 
     {% for idx, photo in photos %}
         <h4>You are looking at an image of crab {{ photo.crab.sample_num }}</h4>
@@ -45,86 +70,18 @@
         <input type="hidden" id= "img{{idx}}" name="{{photo.pk}}" value="{{ photo.pk }}" />
         <a class="waves-effect waves-light btn" id="next" href="{% url 'crabgame:result' photo.id %}">Next</a>
     {% endfor %}
+
+
   <!--  Scripts -->
   <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
   <script src="{% static 'crabgame/js/materialize.js' %}"></script>
   <script src="{% static 'crabgame/js/init.js' %}"></script>
+
   <script>
-    var clicked = [];
-    function nextImg() {
-
-    }
-
-    $(document).ready(function() {
-        $("#binarized").on("click", function(event) {
-            var offsetL = this.offsetLeft;
-            var offsetT = this.offsetTop;
-            var x = event.pageX - offsetL;
-            var y = event.pageY - offsetT;
-            var photo = $("#img0").val();
-            $.ajax({
-              url: 'ajax/find_oocyte/',
-              dataType: "json",
-              data: {
-                'xclick': x,
-                'yclick': y,
-                'photoid': photo
-              },
-              //On click, place a dot at center
-              //to provide feedback
-              success: function(data){
-                var pt = [data.xcenter, data.ycenter];
-                var undone = -1;
-                //Only add to clicked if it hasn't been
-                //selected before
-                /*clicked.forEach(function(element){
-                  console.log(element)
-                  if(element[0] == pt[0] && element[1] == pt[1])
-                    undone = true;
-                })*/
-
-                for(let i = 0; i<clicked.length; i++){
-                  element = clicked[i];
-                  if(element[0] == pt[0] && element[1] == pt[1])
-                    undone = i;
-                }
-                //If not clicked before, add to array and draw circle
-                if(undone < 0){
-                  clicked.push(pt);
-                  if($('#block' + Math.floor(data.xcenter)).length == 0){
-                    $("body").append(            
-                      $('<div id = "block' + Math.floor(data.xcenter) + '"></div>').css({
-                          position: 'absolute',
-                          top: offsetT+ pt[1] - 10 + 'px',
-                          left: offsetL+ pt[0] - 10 + 'px',
-                          width: '20px',
-                          height: '20px',
-                          background: '#000000'
-                      })              
-                    );
-                  }  
-                  else{
-                    $('#block' + Math.floor(data.xcenter)).toggle();
-                  }
-                }
-                //If already clicked, undo and remove from array
-                else{
-                  var div = '#block' + Math.floor(data.xcenter);
-                  clicked.splice(undone, 1);
-                  console.log(clicked);
-                  console.log("divs: " + $(div).length);
-                  $(div).toggle();
-                }
-                console.log(clicked);
-                console.log(undone);
-                
-                
-              }
-            });
-        });
-    });
+    var photos = "{{photos}}";
     document.getElementById("next").addEventListener("click", nextImg);
   </script>
 
 </body>
 
+</html>

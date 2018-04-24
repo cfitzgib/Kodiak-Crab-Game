@@ -12,6 +12,8 @@ def index(request):
         playSessionInstance = PlaySession()
         playSessionInstance.save()
         photos = playSessionInstance.setPhotos()
+        photo1 = photos[0]
+        return render(request, 'crabgame/playCrabImg.html', {'photos': photos, 'photo1': photo1})
         for i in range (0, len(photos)):
             displayImg = photos[i]
             return render(request, 'crabgame/playCrabImg.html', {'photos': enumerate(photos)})
@@ -27,7 +29,6 @@ def find_oocyte(request):
     resp = { 'xcenter': clicked_oocyte.center_x, 'ycenter': clicked_oocyte.center_y }
     return HttpResponse(json.dumps(resp), content_type="application/json")
      
-
 # view the image of a certain crab and click on the oocytes in the image
 def detail(request, image_id):
     photo = Image.objects.get(pk=image_id)

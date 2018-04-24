@@ -29,7 +29,7 @@ class Crab(models.Model):
         
         #This path would be where all the images are stored locally before upload
         #Python script should be pushing images to this path along with its csv file
-        path = 'D:/School/67-373 IS Consulting Project/crab_images/' + str(crab.sample_num)
+        path = '/Users/heramiao/Documents/Junior Year Semester 2/67-373/KodiakSite/crab_images/' + str(crab.sample_num)
         crab.save()
 
         #image = Image(crab.id, path + '/oocyte_resized.png', path + '/oocyte_labeled.png', path + '/oocyte_area.csv')
@@ -116,7 +116,7 @@ class Oocyte(models.Model):
     center_y = models.FloatField()
 
     def __str__(self):
-        return ("image (pk=" + str(self.id) + ")")
+        return ("oocyte (pk=" + str(self.id) + ")")
     # method to increment chosen_count each time somebody clicks on a particular oocyte
 
     # method to call Crab model to increment done_oocyte once chosen_count reaches desired accuracy 
@@ -134,7 +134,7 @@ class PlaySession(models.Model):
 
     # method to increment completed_photos
     def __str__(self):
-        return ("image (pk=" + str(self.id) + ")")
+        return ("playSession (pk=" + str(self.id) + ")")
 
 
     # create a list of 12 photos with random images for user to play when PlaySession instance is created
@@ -153,7 +153,7 @@ class SchoolClass(models.Model):
     className = models.CharField(max_length = 100)
 
     def __str__(self):
-        return ("image (pk=" + str(self.id) + ")")
+        return ("schoolClass (pk=" + str(self.id) + ")")
 
 class Intermediate(models.Model):
     oocyte = models.ForeignKey(Oocyte, on_delete = models.CASCADE)
@@ -161,7 +161,7 @@ class Intermediate(models.Model):
     schoolClass = models.ForeignKey(SchoolClass, on_delete = models.CASCADE)
 
     def __str__(self):
-        return ("image (pk=" + str(self.id) + ")")
+        return ("schoolClass (pk=" + str(self.id) + ")")
 
 
 from django.dispatch import receiver
