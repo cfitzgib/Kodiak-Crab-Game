@@ -117,8 +117,14 @@ class Oocyte(models.Model):
 
     def __str__(self):
         return ("oocyte (pk=" + str(self.id) + ")")
-    # method to increment chosen_count each time somebody clicks on a particular oocyte
 
+    # method to increment chosen_count each time somebody clicks on a particular oocyte
+    def increment_chosen_count(self):
+        self.chosen_count+=1
+        self.save()
+        if(self.chosen_count >= 10):
+            self.crab.done_oocytes += 1
+            self.crab.save()
     # method to call Crab model to increment done_oocyte once chosen_count reaches desired accuracy 
 
     # method to check if done_oocyte already incremented once for this instance of Oocyte, 
