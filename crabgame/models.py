@@ -8,8 +8,7 @@ import os
 import csv
 import re
 import math
-
-
+from sodapy import Socrata
 
 # Create your models here.
 class Crab(models.Model):
@@ -20,6 +19,40 @@ class Crab(models.Model):
     longitude = models.FloatField()
     latitude = models.FloatField()
     water_temp = models.FloatField() 
+
+    def send_crab_data(self):
+        CONVERSION_RATE = .00000701549
+        oocytes = Oocyte.objects.filter(crab=self).filter(chosen_count=10)
+        client = Socrata("noaa-fisheries-afsc.data.socrata.com", None,  username="cfitzgib@andrew.cmu.edu", password = "Kodiak18!")
+        data = {'area_2': '',
+                 'area_5': '', 
+                 'calibration_5x': 0.00028, 
+                 'area_4': '', 
+                 'area_7': '', 
+                 'area_10': '', 
+                 'calibration_10x': 0.00056, 
+                 'area_9': '', 
+                 'year': '', 
+                 'sample': '', 
+                 'area_3': '', 
+                 'area_8': '', 
+                 'area_1': '', 
+                 'area_6': ''}
+        data['area_1'] = oocytes[0].area * CONVERSION_RATE
+        data['area_2'] = oocytes[1].area * CONVERSION_RATE
+        data['area_3'] = oocytes[2].area * CONVERSION_RATE
+        data['area_4'] = oocytes[3].area * CONVERSION_RATE
+        data['area_5'] = oocytes[4].area * CONVERSION_RATE
+        data['area_6'] = oocytes[5].area * CONVERSION_RATE
+        data['area_7'] = oocytes[6].area * CONVERSION_RATE
+        data['area_8'] = oocytes[7].area * CONVERSION_RATE
+        data['area_9'] = oocytes[8].area * CONVERSION_RATE
+        data['area_10'] = oocytes[9].area * CONVERSION_RATE
+        data['year'] = datetime.datetime.now().year
+        data['sample'] = self.sample_num
+        payload = [data]
+        client.upsert("km2u-hwjw", payload)
+
 
     #creates a new crab, finds all of its images and adds them to the system
     #also imports oocyte instances for each image
@@ -122,9 +155,11 @@ class Oocyte(models.Model):
     def increment_chosen_count(self):
         self.chosen_count+=1
         self.save()
-        if(self.chosen_count >= 10):
+        if(self.chosen_count == 10):
             self.crab.done_oocytes += 1
             self.crab.save()
+            if(self.crab.done_oocytes >= 10):
+                self.crab.send_crab_data()
     # method to call Crab model to increment done_oocyte once chosen_count reaches desired accuracy 
 
     # method to check if done_oocyte already incremented once for this instance of Oocyte, 
