@@ -36,8 +36,7 @@
         </div>
         <div class="row center">
           <!-- when button clicked, trigger function to create instance of a PlaySession -->
-          <form method="post" action="">{% csrf_token %}
-          <button id="download-button" class="btn-large waves-effect" type="submit">Play Again</button>
+          <a class="waves-effect waves-light btn orange darken-3" href="{% url 'crabgame:index' %}">Play Again</a>
         </div>
         <br><br>
 
