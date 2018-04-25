@@ -13,9 +13,7 @@ def index(request):
         playSessionInstance.save()
         photos = playSessionInstance.setPhotos()
         total = len(photos)
-        for i in range (0, len(photos)):
-            displayImg = photos[i]
-            return render(request, 'crabgame/playCrabImg.html', {'photos': enumerate(photos), 'total': total})
+        return render(request, 'crabgame/playCrabImg.html', {'photos': enumerate(photos), 'total': total})
     return render(request, 'crabgame/index.html')
 
 #Gets data from ajax request, finds oocyte clicked,
