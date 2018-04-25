@@ -62,20 +62,27 @@
       <div class="modal-content">
         <h5>How to Play:</h5>
         <p>
-          On the left, you will see an original image of a crab's oocytes taken by a microscope at the KFRC. 
-          On the right, you will see the same original image that has all of its identified oocytes labeled color. 
-        </p>
-        <p>
-          The purpose of the game is to identify and click on all of the good oocytes on the right side, labeled image. 
-          Looking at the image on the left, a "good" oocyte is one that is both dark and circular. Once a good oocyte on 
-          the left has been identified, click on the corresponding oocyte on the right side image to mark it. 
+          Identify and click on all of the <b>good oocytes</b> on the labeled image on the right side.  
+          Looking at the original, microscope image on the left, a good oocyte is one that is both 
+          <b>dark and mostly circular</b>. Once a good oocyte on the left has been identified, 
+          click on the corresponding oocyte on the right side image to mark it. 
         </p>
         <p>
           * There can be anywere between 0-8 good oocytes in one image
         </p>
         <p>
-          * If 2 oocytes touching are the same color, they are connected and are not "good" oocytes
+          * If 2 oocytes touching are the same color, they are connected and are <b>NOT good oocytes</b>
         </p>
+        <p><b>Ex. Good Oocytes</b></p>
+        <img src="{% static 'crabgame/img/goodOrig.png' %}" width=140 height=150 />
+        <img src="{% static 'crabgame/img/goodBin.png' %}" width=140 height=150 />
+        <img src="{% static 'crabgame/img/goodOrig2.png' %}" width=140 height=150 />
+        <img src="{% static 'crabgame/img/goodBin2.png' %}" width=140 height=150 />
+        <p><b>Ex. Bad Oocytes</b></p>
+        <img src="{% static 'crabgame/img/badOrig2.png' %}" width=140 height=150 />
+        <img src="{% static 'crabgame/img/badBin2.png' %}" width=140 height=150 />
+        <img src="{% static 'crabgame/img/badOrig.png' %}" width=140 height=150 />
+        <img src="{% static 'crabgame/img/badBin.png' %}" width=140 height=150 />
       </div>
       <div class="modal-footer">
         <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Start Game</a>
