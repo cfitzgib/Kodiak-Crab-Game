@@ -4,7 +4,7 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>Kodiak Crab Game</title>
+  <title>Crab 'n Click</title>
 
   <!-- CSS  -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -17,13 +17,14 @@
 <body>
 
   <!-- Navigation Bar -->
-  <nav class="amber darken-1" role="navigation">
-    <div class="nav-wrapper container"><a id="logo-container" href="{% url 'crabgame:index' %}" class="brand-logo">Logo</a>
-      <ul class="right hide-on-med-and-down">
-        <li><a href="#">NOAA</a></li>
-        <li><a href="#">KFRC</a></li>
-        <li><a href="#">KIBSD</a></li>
-      </ul>
+  <nav class="cyan darken-2" role="navigation">
+      <div class="nav-wrapper container" id="nav-content">
+        <a id="logo-container" href="{% url 'crabgame:index' %}" class="brand-logo"><img src="{% static 'crabgame/img/logo.png' %}" id="logo"/></a>
+        <ul class="right hide-on-med-and-down">
+          <li><a href="#">NOAA</a></li>
+          <li><a href="#">KFRC</a></li>
+          <li><a href="#">KIBSD</a></li>
+        </ul>
 
       <ul id="nav-mobile" class="sidenav">
         <li><a href="#">Navbar Link</a></li>
@@ -32,26 +33,24 @@
     </div>
   </nav>
 
-  <div id="playImg" class="cyan darken-3">
+  <div id="playImg" class="teal lighten-5">
     <!-- Display images of crabs --> 
     {% for idx, photo in photos %}
-        
-        <div class="row" id="image{{idx}}">
-          <h4>Image {{ idx|add:"1" }}/{{ total }}</h4>
-          <div class="col s6 m6 l6">
-            <img id="original" src="/media/{{ photo.crab.sample_num }}/untitled{{ photo.get_img_num }}_resize.png"/>
-          </div>
-          <div class="col s6 m6 l6">
-            <img id="binarized{{idx}}" src="/media/{{ photo.crab.sample_num }}/untitled{{ photo.get_img_num }}_label.png"/>
-          </div>
-          <br><br>
-          <input type="hidden" id= "img{{idx}}" name="{{photo.pk}}" value="{{ photo.pk }}" />
-          {% if idx < 7 %}
-            <a class="waves-effect waves-light btn" id="next" onclick= "nextImg()">Next</a>
-          {% else %}
-            <a class="waves-effect waves-light btn" id="next" href="{% url 'crabgame:result' photo.id %}">Submit</a>
-          {% endif %}
+      <div class="row" id="image{{idx}}">
+        <h4>Image {{ idx|add:"1" }}/{{ total }}</h4>
+        <div class="col s6 m6 l6">
+          <img id="original" src="/media/{{ photo.crab.sample_num }}/untitled{{ photo.get_img_num }}_resize.png"/>
         </div>
+        <div class="col s6 m6 l6">
+          <img id="binarized{{idx}}" src="/media/{{ photo.crab.sample_num }}/untitled{{ photo.get_img_num }}_label.png"/>
+        </div>
+        <input type="hidden" id= "img{{idx}}" name="{{photo.pk}}" value="{{ photo.pk }}" />
+        {% if idx < 7 %}
+          <a class="waves-effect waves-light btn deep-orange lighten-1" id="next" onclick= "nextImg()">Next</a>
+        {% else %}
+          <a class="waves-effect waves-light btn deep-orange lighten-1" id="next" href="{% url 'crabgame:result' photo.id %}">Submit</a>
+        {% endif %}
+      </div>
 
     {% endfor %}
 
@@ -85,7 +84,7 @@
         <img src="{% static 'crabgame/img/badBin.png' %}" width=140 height=150 />
       </div>
       <div class="modal-footer">
-        <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Start Game</a>
+        <a href="#!" class="modal-action modal-close waves-effect waves-light btn deep-orange lighten-1">Start Game</a>
       </div>
   </div>
 

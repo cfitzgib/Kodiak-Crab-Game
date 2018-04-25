@@ -11,12 +11,13 @@
 
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
-  <title>Name of Crab Game??</title>
+  <title>Crab 'n Click</title>
 </head>
 
 <body>
-  <nav class="amber darken-1" role="navigation">
-    <div class="nav-wrapper container"><a id="logo-container" href="{% url 'crabgame:index' %}" class="brand-logo">Logo</a>
+  <nav class="cyan darken-2" role="navigation">
+    <div class="nav-wrapper container" id="nav-content">
+      <a id="logo-container" href="{% url 'crabgame:index' %}" class="brand-logo"><img src="{% static 'crabgame/img/logo.png' %}" id="logo"/></a>
       <ul class="right hide-on-med-and-down">
         <li><a href="#">NOAA</a></li>
         <li><a href="#">KFRC</a></li>
@@ -32,7 +33,7 @@
 
   <div id="startScreen" class="cyan darken-3">
     <br><br>
-    <h1 class="header center">Name of Crab Game??</h1>
+    <h1 class="header center">Crab 'n Click</h1>
     <br>
     <div class="row center">
         <h5 class="header col s12 light">Help the Kodiak Fisheries Research Center analyze crabs collected from the Bering Sea</h5>
@@ -41,14 +42,14 @@
     <div class="row center">
         <!-- when button clicked, trigger function to create instance of a PlaySession -->
         <form method="post" action="">{% csrf_token %}
-        <button id="startBtn" class="btn-large waves-effect orange darken-3" type="submit">Get Started</button>
+        <button id="startBtn" class="btn-large waves-effect deep-orange lighten-1" type="submit">Get Started</button>
     </div>
     <br><br>
   </div>
 
-  <div class="orange lighten-5">
+  <div class="teal lighten-5">
   <br><br>
-  <div id="content" class="orange lighten-5">
+  <div id="content" class="teal lighten-5">
     <div class="row">
         <div class="col s12">
             <div id="progress">
@@ -79,7 +80,7 @@
   <br><br>
   </div>
 
-  <footer class="page-footer amber darken-1">
+  <footer class="page-footer cyan darken-2">
       <div class="row" id="contactRow">
         <div class="col l6 s12">
         <div id="creators">
