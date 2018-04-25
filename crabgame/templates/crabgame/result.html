@@ -4,7 +4,7 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>Kodiak Crab Game</title>
+  <title>Crab 'n Click</title>
 
   <!-- CSS  -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -13,8 +13,8 @@
 </head>
 <body>
   <nav class="white" role="navigation">
-    <div class="nav-wrapper container">
-      <a id="logo-container" href="{% url 'crabgame:index' %}" class="brand-logo">Kodiak-Crab</a>
+    <div class="nav-wrapper container" id="nav-content">
+        <a id="logo-container" href="{% url 'crabgame:index' %}" class="brand-logo"><img src="{% static 'crabgame/img/logo.png' %}" id="logo"/></a>
       <ul class="right hide-on-med-and-down">
         <li><a href="#">About Us</a></li>
       </ul>
@@ -36,8 +36,7 @@
         </div>
         <div class="row center">
           <!-- when button clicked, trigger function to create instance of a PlaySession -->
-          <form method="post" action="">{% csrf_token %}
-          <button id="download-button" class="btn-large waves-effect" type="submit">Play Again</button>
+          <a class="waves-effect waves-light btn deep-orange lighten-1" href="{% url 'crabgame:index' %}">Play Again</a>
         </div>
         <br><br>
 

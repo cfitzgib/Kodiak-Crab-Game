@@ -4,7 +4,7 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>Kodiak Crab Game</title>
+  <title>Crab 'n Click</title>
 
   <!-- CSS  -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -15,50 +15,91 @@
 </head>
 
 <body>
+
   <!-- Navigation Bar -->
-  <nav class="amber darken-1" role="navigation">
-      <div class="nav-wrapper container"><a id="logo-container" href="{% url 'crabgame:index' %}" class="brand-logo">Logo</a>
+  <nav class="cyan darken-2" role="navigation">
+      <div class="nav-wrapper container" id="nav-content">
+        <a id="logo-container" href="{% url 'crabgame:index' %}" class="brand-logo"><img src="{% static 'crabgame/img/logo.png' %}" id="logo"/></a>
         <ul class="right hide-on-med-and-down">
           <li><a href="#">NOAA</a></li>
           <li><a href="#">KFRC</a></li>
+          <li><a href="#">KIBSD</a></li>
         </ul>
-  
-        <ul id="nav-mobile" class="sidenav">
-          <li><a href="#">Navbar Link</a></li>
-        </ul>
-        <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-      </div>
-    </nav>
 
-    <div id="playImg" class="cyan darken-3">
-      <!-- Display images of crabs --> 
-      {% for idx, photo in photos %}
-          
-          <div class="row" id="image{{idx}}">
-            <h4>You are looking at an image of crab {{ photo.crab.sample_num }}</h4>
-            <div class="col s6 m6 l6">
-              <img id="original" src="/media/{{ photo.crab.sample_num }}/untitled{{ photo.get_img_num }}_resize.png"/>
-            </div>
-            <div class="col s6 m6 l6">
-              <img id="binarized{{idx}}" src="/media/{{ photo.crab.sample_num }}/untitled{{ photo.get_img_num }}_label.png"/>
-            </div>
-            <br><br>
-            <input type="hidden" id= "img{{idx}}" name="{{photo.pk}}" value="{{ photo.pk }}" />
-            {% if idx < 7 %}
-              <a class="waves-effect waves-light btn" id="next" onclick= "nextImg()">Next</a>
-            {% else %}
-              <a class="waves-effect waves-light btn" id="next" href="{% url 'crabgame:result' photo.id %}">Submit</a>
-            {% endif %}
-          </div>
-      {% endfor %}
-
+      <ul id="nav-mobile" class="sidenav">
+        <li><a href="#">Navbar Link</a></li>
+      </ul>
+      <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
     </div>
+  </nav>
+
+  <div id="playImg" class="teal lighten-5">
+    <!-- Display images of crabs --> 
+    {% for idx, photo in photos %}
+      <div class="row" id="image{{idx}}">
+        <h4>Image {{ idx|add:"1" }}/{{ total }}</h4>
+        <div class="col s6 m6 l6">
+          <img id="original" src="/media/{{ photo.crab.sample_num }}/untitled{{ photo.get_img_num }}_resize.png"/>
+        </div>
+        <div class="col s6 m6 l6">
+          <img id="binarized{{idx}}" src="/media/{{ photo.crab.sample_num }}/untitled{{ photo.get_img_num }}_label.png"/>
+        </div>
+        <input type="hidden" id= "img{{idx}}" name="{{photo.pk}}" value="{{ photo.pk }}" />
+        {% if idx < 7 %}
+          <a class="waves-effect waves-light btn deep-orange lighten-1" id="next" onclick= "nextImg()">Next</a>
+        {% else %}
+          <a class="waves-effect waves-light btn deep-orange lighten-1" id="next" href="{% url 'crabgame:result' photo.id %}">Submit</a>
+        {% endif %}
+      </div>
+
+    {% endfor %}
+
+  </div>
+
+  <!-- Modal Pop Up Instructions -->
+  <div id="modal" class="modal">
+      <div class="modal-content">
+        <h5>How to Play:</h5>
+        <p>
+          Identify and click on all of the <b>good oocytes</b> on the labeled image on the right side.  
+          Looking at the original, microscope image on the left, a good oocyte is one that is both 
+          <b>dark and mostly circular</b>. Once a good oocyte on the left has been identified, 
+          click on the corresponding oocyte on the right side image to mark it. 
+        </p>
+        <p>
+          * There can be anywere between 0-8 good oocytes in one image
+        </p>
+        <p>
+          * If 2 oocytes touching are the same color, they are connected and are <b>NOT good oocytes</b>
+        </p>
+        <p><b>Ex. Good Oocytes</b></p>
+        <img src="{% static 'crabgame/img/goodOrig.png' %}" width=140 height=150 />
+        <img src="{% static 'crabgame/img/goodBin.png' %}" width=140 height=150 />
+        <img src="{% static 'crabgame/img/goodOrig2.png' %}" width=140 height=150 />
+        <img src="{% static 'crabgame/img/goodBin2.png' %}" width=140 height=150 />
+        <p><b>Ex. Bad Oocytes</b></p>
+        <img src="{% static 'crabgame/img/badOrig2.png' %}" width=140 height=150 />
+        <img src="{% static 'crabgame/img/badBin2.png' %}" width=140 height=150 />
+        <img src="{% static 'crabgame/img/badOrig.png' %}" width=140 height=150 />
+        <img src="{% static 'crabgame/img/badBin.png' %}" width=140 height=150 />
+      </div>
+      <div class="modal-footer">
+        <a href="#!" class="modal-action modal-close waves-effect waves-light btn deep-orange lighten-1">Start Game</a>
+      </div>
+  </div>
 
 
   <!--  Scripts -->
   <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
   <script src="{% static 'crabgame/js/materialize.js' %}"></script>
   <script src="{% static 'crabgame/js/init.js' %}"></script>
+
+  <script>
+      $(document).ready(function(){
+          $('.modal').modal();
+          $('#modal').modal('open');
+      });
+  </script>
 
 </body>
 

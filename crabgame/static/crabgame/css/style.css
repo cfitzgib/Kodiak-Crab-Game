@@ -17,8 +17,13 @@ nav {
   height: 110px;
 }
 
+#nav-content {
+  margin-left: 60px;
+}
+
 #startScreen {
   height: 535px;
+  background: url("/static/crabgame/img/crabs1.jpg") no-repeat;
 }
 
 #content {
@@ -28,4 +33,16 @@ nav {
 
 #contactRow {
   margin: 50px;
+}
+
+#playImg {
+  padding: 25px;
+  padding-bottom: 15px;
+}
+
+#next {
+  margin-top: 75px;
+  margin-left: 85%;
+  padding-left: 40px;
+  padding-right: 40px;
 }
