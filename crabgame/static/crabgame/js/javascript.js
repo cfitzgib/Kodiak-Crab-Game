@@ -68,13 +68,16 @@ $(document).ready(function() {
               clicked.push(pt);
               if($('#block' + Math.floor(data.xcenter)).length == 0){
                 $("body").append(            
-                  $('<div id = "block' + Math.floor(data.xcenter) + '"></div>').css({
+                  $('<div id = "block' + Math.floor(data.xcenter) + '">'+clicked.length+'</div>').css({
                       position: 'absolute',
                       top: offsetT+ pt[1] - 10 + 'px',
                       left: offsetL+ pt[0] - 10 + 'px',
                       width: '20px',
                       height: '20px',
-                      background: '#000000'
+                      paddingLeft: '6px',
+                      color: '#FFFFFF',
+                      background: '#000000',
+
                   })              
                 );
               }  
