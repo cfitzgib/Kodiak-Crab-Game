@@ -74,7 +74,7 @@ ENV_PATH = os.path.abspath(os.path.dirname(__file__))
 MEDIA_ROOT = os.path.join(ENV_PATH, 'media/')
 MEDIA_URL = '/media/'
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = os.path.join(BASE_DIR, 'crabgame/staticfiles')
 STATIC_URL = '/static/' # the path in url
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "crabgame/static"),
