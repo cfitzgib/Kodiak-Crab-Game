@@ -74,8 +74,8 @@ ENV_PATH = os.path.abspath(os.path.dirname(__file__))
 MEDIA_ROOT = os.path.join(ENV_PATH, 'media/')
 MEDIA_URL = '/media/'
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'app/staticfiles')
-STATIC_URL = '/app/static/' # the path in url
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_URL = '/app/staticfiles/' # the path in url
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
@@ -127,5 +127,3 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
-
-STATIC_URL = '/static/'
