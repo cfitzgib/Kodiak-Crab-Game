@@ -76,7 +76,7 @@ MEDIA_URL = '/media/'
 
 STATIC_URL = '/static/' # the path in url
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "crabgame/static"),
+    os.path.join(BASE_DIR, "static"),
 ]
 
 
