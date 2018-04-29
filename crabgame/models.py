@@ -182,6 +182,7 @@ class PlaySession(models.Model):
     def setPhotos(self):
         allCrabs = list(Crab.objects.all())
         crabList = random.sample(allCrabs, 4) # pick 4 random crabs per PlaySession 
+        global photos
         photos = []
         for i in range (0, len(crabList)):
             images = list(crabList[i].image_set.all()) # look at all images from one crab of crabList
@@ -189,6 +190,14 @@ class PlaySession(models.Model):
             for j in range (0, len(playImg)):
                 photos.append(playImg[j])
         return photos
+    
+    def getCrabs(self):
+        analyzedCrabs = []
+        sessionPhotos = photos
+        for i in range(0, len(sessionPhotos)):
+            crab = sessionPhotos[i].crab
+            analyzedCrabs.append(crab)
+        return analyzedCrabs
 
 class SchoolClass(models.Model):
     className = models.CharField(max_length = 100)

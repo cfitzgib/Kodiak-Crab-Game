@@ -48,7 +48,7 @@
         {% if idx < 7 %}
           <a class="waves-effect waves-light btn deep-orange lighten-1" id="next" onclick= "nextImg()">Next</a>
         {% else %}
-          <a class="waves-effect waves-light btn deep-orange lighten-1" id="next" href="{% url 'crabgame:result' photo.id %}">Submit</a>
+          <a class="waves-effect waves-light btn deep-orange lighten-1" id="submit" href="{% url 'crabgame:result' session_id %}">Submit</a>
         {% endif %}
       </div>
 

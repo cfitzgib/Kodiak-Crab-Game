@@ -40,7 +40,7 @@ nav {
   padding-bottom: 15px;
 }
 
-#next {
+#next, #submit {
   margin-top: 75px;
   margin-left: 85%;
   padding-left: 40px;

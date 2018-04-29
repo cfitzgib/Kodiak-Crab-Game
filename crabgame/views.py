@@ -13,7 +13,7 @@ def index(request):
         playSessionInstance.save()
         photos = playSessionInstance.setPhotos()
         total = len(photos)
-        return render(request, 'crabgame/playCrabImg.html', {'photos': enumerate(photos), 'total': total})
+        return render(request, 'crabgame/playCrabImg.html', {'photos': enumerate(photos), 'total': total, 'session_id': playSessionInstance.id})
     return render(request, 'crabgame/index.html')
 
 #Gets data from ajax request, finds oocyte clicked,
@@ -38,6 +38,8 @@ def detail(request, image_id):
 
 # display the result page after the user have completed a session
 def result(request, session_id):
-    return render(request, 'crabgame/result.html')
+    session = PlaySession.objects.get(pk=session_id)
+    analyzedCrabs = session.getCrabs()
+    return render(request, 'crabgame/result.html', {'analyzedCrabs': analyzedCrabs})
 
 

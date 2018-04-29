@@ -10,6 +10,7 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link href="{% static 'crabgame/css/materialize.css' %}" type="text/css" rel="stylesheet" media="screen,projection"/>
   <link href="{% static 'crabgame/css/style.css' %}" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link rel="shortcut icon" href="">
 
   <style>
     /* Always set the map height explicitly to define the size of the div
@@ -43,16 +44,44 @@
       </div>
     </nav>
 
-  <div id="map"></div>
+  <div id="map">
+    <input type="hidden" id="analyzedCrabs" name="analyzedCrabs" value="{{ analyzedCrabs }}">
+  </div>
 
   <script>
-  
+
+    var analyzedCrabs = document.getElementById("analyzedCrabs").value;
+    console.log(analyzedCrabs);
+    console.log(typeof analyzedCrabs)
     var map;
     function initMap() {
       map = new google.maps.Map(document.getElementById('map'), {
         center: {lat: 59.14325, lng: -174.44471},
         zoom: 5
       });
+
+      var crab = analyzedCrabs[0];
+      console.log(crab);
+      // console.log(crab.latitude);
+      // console.log(crab.longitude);
+      var myLatLng = {lat: crab.latitude, lng: crab.longitude};
+      var marker = new google.maps.Marker({
+          position: myLatLng,
+          map: map,
+          title: 'Hello World!'
+        });
+
+      // var marker;
+      // for (i = 0; i < analyzedCrabs.length; i++) {
+      //   var crab = analyzedCrabs[i];
+      //   //var crabLatLng = {lat: analyzedCrabs[i].latitude, lng: analyzedCrabs[i].longitude};
+      //   var crabLatLng = new google.maps.LatLng(crab.latitude, crab.longitude)
+      //   marker = new google.maps.Marker({
+      //       position: crabLatLng,
+      //       map: map, 
+      //       title: 'Hello World!'
+      //   })
+      // }
     }
   
   </script>
