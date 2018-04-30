@@ -40,6 +40,7 @@ def detail(request, image_id):
 def result(request, session_id):
     session = PlaySession.objects.get(pk=session_id)
     analyzedCrabs = session.getCrabs()
-    return render(request, 'crabgame/result.html', {'analyzedCrabs': analyzedCrabs})
+    crabCount = len(analyzedCrabs)
+    return render(request, 'crabgame/result.html', {'analyzedCrabs': enumerate(analyzedCrabs), 'crabCount': crabCount})
 
 

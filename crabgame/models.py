@@ -9,6 +9,7 @@ import csv
 import re
 import math
 from sodapy import Socrata
+from django.contrib.postgres.fields import ArrayField
 
 # Create your models here.
 class Crab(models.Model):
@@ -16,8 +17,8 @@ class Crab(models.Model):
     # number of oocytes that reached more than 10 clicks
     done_oocytes = models.IntegerField(default = 0, validators = [MaxValueValidator(10)])
     year = models.IntegerField(default = datetime.date.today().year)
-    longitude = models.FloatField()
     latitude = models.FloatField()
+    longitude = models.FloatField()
     water_temp = models.FloatField() 
 
     def send_crab_data(self):
@@ -168,7 +169,7 @@ class Oocyte(models.Model):
 
 class PlaySession(models.Model):
     num_photos = models.IntegerField(default = 8) # assume 12 photos per game session for now
-    #photos = models.ArrayField(max_length = num_photos)
+    # photos = ArrayField(max_length = num_photos)
     completed_photos = models.IntegerField(default = 0)
 
     # method to end PlaySession when completed_photos is incremented to equal num_photos
@@ -176,7 +177,6 @@ class PlaySession(models.Model):
     # method to increment completed_photos
     def __str__(self):
         return ("playSession (pk=" + str(self.id) + ")")
-
 
     # create a list of 12 photos with random images for user to play when PlaySession instance is created
     def setPhotos(self):

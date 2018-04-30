@@ -32,20 +32,6 @@ $(document).ready(function() {
   hide_inactive_images();
 });
 
-//Pass in session info to results page once submit button is clicked
-// function showResults() {
-//   var playSession = this.playSession
-//   console.log(playSession)
-//   // var analyzedCrabs = 
-//   $.ajax({
-//     url: 'ajax/result/', 
-//     dataType: "json", 
-//     data: {
-//       'session': playSession
-//     }
-//   })
-// };
-
 var clicked = [];
 $(document).ready(function() {
   //Attach a handler to each of the images for when they become visible
