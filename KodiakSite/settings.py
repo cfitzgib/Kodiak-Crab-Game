@@ -25,7 +25,7 @@ SECRET_KEY = 't1ro0vs&k7^(%jj#mdj0-^h6a)h0m^1ujkth@82fgnnl)l=_(5'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['blooming-earth-30436.herokuapp.com', '127.0.0.1']
 
 
 # Application definition
@@ -74,9 +74,10 @@ ENV_PATH = os.path.abspath(os.path.dirname(__file__))
 MEDIA_ROOT = os.path.join(ENV_PATH, 'media/')
 MEDIA_URL = '/media/'
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/' # the path in url
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static"),
+    os.path.join(BASE_DIR, "crabgame/static"),
 ]
 
 
@@ -126,5 +127,3 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
-
-STATIC_URL = '/static/'

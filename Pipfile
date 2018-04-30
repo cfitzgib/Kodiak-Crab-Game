@@ -1,0 +1,17 @@
+[[source]]
+verify_ssl = true
+url = "https://pypi.python.org/simple"
+name = "pypi"
+
+[requires]
+python_version = "3.5"
+
+[dev-packages]
+
+[packages]
+dj-database-url = "*"
+django = "*"
+gunicorn = "*"
+psycopg2 = "*"
+whitenoise = "*"
+sodapy = "*"
