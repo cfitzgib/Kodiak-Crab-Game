@@ -32,7 +32,6 @@ $(document).ready(function() {
   hide_inactive_images();
 });
 
-
 var clicked = [];
 $(document).ready(function() {
   //Attach a handler to each of the images for when they become visible

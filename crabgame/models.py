@@ -9,6 +9,7 @@ import csv
 import re
 import math
 from sodapy import Socrata
+from django.contrib.postgres.fields import ArrayField
 
 # Create your models here.
 class Crab(models.Model):
@@ -16,8 +17,8 @@ class Crab(models.Model):
     # number of oocytes that reached more than 10 clicks
     done_oocytes = models.IntegerField(default = 0, validators = [MaxValueValidator(10)])
     year = models.IntegerField(default = datetime.date.today().year)
-    longitude = models.FloatField()
     latitude = models.FloatField()
+    longitude = models.FloatField()
     water_temp = models.FloatField() 
 
     def send_crab_data(self):
@@ -168,7 +169,7 @@ class Oocyte(models.Model):
 
 class PlaySession(models.Model):
     num_photos = models.IntegerField(default = 8) # assume 12 photos per game session for now
-    #photos = models.ArrayField(max_length = num_photos)
+    # photos = ArrayField(max_length = num_photos)
     completed_photos = models.IntegerField(default = 0)
 
     # method to end PlaySession when completed_photos is incremented to equal num_photos
@@ -177,11 +178,11 @@ class PlaySession(models.Model):
     def __str__(self):
         return ("playSession (pk=" + str(self.id) + ")")
 
-
     # create a list of 12 photos with random images for user to play when PlaySession instance is created
     def setPhotos(self):
         allCrabs = list(Crab.objects.all())
         crabList = random.sample(allCrabs, 4) # pick 4 random crabs per PlaySession 
+        global photos
         photos = []
         for i in range (0, len(crabList)):
             images = list(crabList[i].image_set.all()) # look at all images from one crab of crabList
@@ -189,6 +190,14 @@ class PlaySession(models.Model):
             for j in range (0, len(playImg)):
                 photos.append(playImg[j])
         return photos
+    
+    def getCrabs(self):
+        analyzedCrabs = []
+        sessionPhotos = photos
+        for i in range(0, len(sessionPhotos)):
+            crab = sessionPhotos[i].crab
+            analyzedCrabs.append(crab)
+        return analyzedCrabs
 
 class SchoolClass(models.Model):
     className = models.CharField(max_length = 100)
