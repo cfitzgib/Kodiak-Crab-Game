@@ -4,7 +4,7 @@ from django.utils import timezone
 from django.core.files import File
 import datetime
 import random
-import os
+import os, json
 import csv
 import re
 import math
@@ -24,7 +24,7 @@ class Crab(models.Model):
     def send_crab_data(self):
         CONVERSION_RATE = .00000701549
         oocytes = Oocyte.objects.filter(crab=self).filter(chosen_count=10)
-        client = Socrata("noaa-fisheries-afsc.data.socrata.com", None,  username="cfitzgib@andrew.cmu.edu", password = "Kodiak18!")
+        client = Socrata("noaa-fisheries-afsc.data.socrata.com", "q3DhSQxvyWbtq1kLPs5q7jwQp",  username="cfitzgib@andrew.cmu.edu", password = "Kodiak18!")
         data = {'area_2': '',
                  'area_5': '', 
                  'calibration_5x': 0.00028, 
@@ -58,8 +58,13 @@ class Crab(models.Model):
     #creates a new crab, finds all of its images and adds them to the system
     #also imports oocyte instances for each image
     @classmethod
-    def create_image_instances(cls, sn, yr, lon, lat, wt):
+    def create_image_instances(cls, sn):
+        client = Socrata("noaa-fisheries-afsc.data.socrata.com", "q3DhSQxvyWbtq1kLPs5q7jwQp",  username="cfitzgib@andrew.cmu.edu", password = "Kodiak18!")
+        crab_info = client.get("n49y-v5db", where=("sample = " + str(sn)))
+        lat, lon = crab_info[0]['location_1']['latitude'], crab_info[0]['location_1']['longitude']
+        yr, wt = crab_info[0]['year'], crab_info[0]['bottom_temp_c']
         crab = Crab(sample_num=sn, year=yr, longitude=lon, latitude=lat, water_temp = wt)
+        
         
         #This path would be where all the images are stored locally before upload
         #Python script should be pushing images to this path along with its csv file
