@@ -82,6 +82,8 @@ $(document).ready(function() {
                 );
               }  
               else{
+                console.log(clicked.length);
+                $('#block' + Math.floor(data.xcenter)).text(clicked.length);
                 $('#block' + Math.floor(data.xcenter)).toggle();
               }
             }
