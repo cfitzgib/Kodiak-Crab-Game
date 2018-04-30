@@ -36,10 +36,7 @@
   <nav class="cyan darken-2" role="navigation">
       <div class="nav-wrapper container" id="nav-content">
         <a id="logo-container" href="{% url 'crabgame:index' %}" class="brand-logo"><img src="{% static 'crabgame/img/logo.png' %}" id="logo"/></a>
-<<<<<<< HEAD
-      <ul class="right hide-on-med-and-down">
-        <li><a href="#">About Us</a></li>
-      </ul>
+
 
       <ul id="nav-mobile" class="sidenav">
         <li><a href="#">About Us</a></li>
@@ -47,36 +44,6 @@
       <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
     </div>
   </nav>
-
-  <div id="index-banner" class="parallax-container">
-    <div class="section no-pad-bot">
-      <div class="container">
-        <br><br>
-        <h1 class="header center teal-text text-lighten-2">Kodiak Crab Game</h1>
-        <div class="row center">
-          <h5 class="header col s12 light">Congratulations. You have completed a round.</h5>
-          <h5 class="header col s12 light"> <a href = "https://goo.gl/forms/MwZ5gjpQyTO03nKo2">Leave us feedback!</a> </h5>
-        </div>
-        <div class="row center">
-          <!-- when button clicked, trigger function to create instance of a PlaySession -->
-          <a class="waves-effect waves-light btn deep-orange lighten-1" href="{% url 'crabgame:index' %}">Play Again</a>
-        </div>
-        <br><br>
-
-=======
-        <ul class="right hide-on-med-and-down">
-          <li><a href="#">NOAA</a></li>
-          <li><a href="#">KFRC</a></li>
-          <li><a href="#">KIBSD</a></li>
-        </ul>
-  
-        <ul id="nav-mobile" class="sidenav">
-          <li><a href="#">Navbar Link</a></li>
-        </ul>
-        <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
->>>>>>> upstream/master
-      </div>
-    </nav>
 
     {% for idx, crab in analyzedCrabs %}
       <input type="hidden" id="lat{{idx}}" value="{{crab.latitude}}">
