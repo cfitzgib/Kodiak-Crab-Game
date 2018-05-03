@@ -57,47 +57,52 @@ class Crab(models.Model):
 
     #creates a new crab, finds all of its images and adds them to the system
     #also imports oocyte instances for each image
+    #find path, for each folder, create crab, read its data from socrata, read all the images on that path
     @classmethod
-    def create_image_instances(cls, sn):
-        client = Socrata("noaa-fisheries-afsc.data.socrata.com", "q3DhSQxvyWbtq1kLPs5q7jwQp",  username="cfitzgib@andrew.cmu.edu", password = "Kodiak18!")
-        crab_info = client.get("n49y-v5db", where=("sample = " + str(sn)))
-        lat, lon = crab_info[0]['location_1']['latitude'], crab_info[0]['location_1']['longitude']
-        yr, wt = crab_info[0]['year'], crab_info[0]['bottom_temp_c']
-        crab = Crab(sample_num=sn, year=yr, longitude=lon, latitude=lat, water_temp = wt)
-        
-        
-        #This path would be where all the images are stored locally before upload
-        #Python script should be pushing images to this path along with its csv file
-        path = 'D:/School/67-373 IS Consulting Project/crab_images/' + str(crab.sample_num)
-        crab.save()
+    def create_image_instances(cls, path):
+        for root, dirs, files in os.walk(path, topdown=False):
+            for folder in dirs:
+                print(folder)
+                sn = int(folder)
+                client = Socrata("noaa-fisheries-afsc.data.socrata.com", "q3DhSQxvyWbtq1kLPs5q7jwQp",  username="cfitzgib@andrew.cmu.edu", password = "Kodiak18!")
+                crab_info = client.get("n49y-v5db", where=("sample = " + str(sn)))
+                lat, lon = crab_info[0]['location_1']['latitude'], crab_info[0]['location_1']['longitude']
+                yr, wt = crab_info[0]['year'], crab_info[0]['bottom_temp_c']
+                crab = Crab(sample_num=sn, year=yr, longitude=lon, latitude=lat, water_temp = wt)
+            
+            
+                #This path would be where all the images are stored locally before upload
+                #Python script should be pushing images to this path along with its csv file
+                image_folder = 'D:/School/67-373 IS Consulting Project/crab_images/' + str(sn)
+                crab.save()
 
-        #image = Image(crab.id, path + '/oocyte_resized.png', path + '/oocyte_labeled.png', path + '/oocyte_area.csv')
-        for filename in os.listdir(path):
-            #look for a resized image and then find its labeled counterpart
-            if(filename[-12:] == "_resized.png"):
-                #tag is the identifier for that image
-                tag = filename[:-12]
-                
-                #open both original and resized
-                orig = File(open(path + '/' + tag + '_resized.png', 'rb'))
-                label = File(open(path + '/' + tag + '_labeled.png', 'rb'))
+                #image = Image(crab.id, path + '/oocyte_resized.png', path + '/oocyte_labeled.png', path + '/oocyte_area.csv')
+                for filename in os.listdir(image_folder):
+                    #look for a resized image and then find its labeled counterpart
+                    if(filename[-12:] == "_resized.png"):
+                        #tag is the identifier for that image
+                        tag = filename[:-12]
+                        
+                        #open both original and resized
+                        orig = File(open(image_folder + '/' + tag + '_resized.png', 'rb'))
+                        label = File(open(image_folder + '/' + tag + '_labeled.png', 'rb'))
 
-                data = tag + "_area.csv"
+                        data = tag + "_area.csv"
 
-                #create Image instance and save images to the media root directory
-                image = Image(crab=crab, csv = data)
-                image.original_img.save(tag + "_resize.png", orig, save=False)
-                image.binarized_img.save(tag + "_label.png", label, save=False)
-                print(image.original_img)
-                image.save()
+                        #create Image instance and save images to the media root directory
+                        image = Image(crab=crab, csv = data)
+                        image.original_img.save(tag + "_resize.png", orig, save=False)
+                        image.binarized_img.save(tag + "_label.png", label, save=False)
+                        print(image.original_img)
+                        image.save()
 
-                #read csv for image and import new oocyte instances
-                #csv must be located in the original path directory where the images were stored
-                with open(path + '/' + data, 'r', newline='') as csvfile:
-                    areareader = csv.reader(csvfile, delimiter = ',', quotechar = '|')
-                    for row in areareader:
-                        area, xcenter, ycenter = row[0], row[1], row[2]
-                        Oocyte.objects.create(crab=crab, image = image, area = area, center_x = xcenter, center_y = ycenter)
+                        #read csv for image and import new oocyte instances
+                        #csv must be located in the original path directory where the images were stored
+                        with open(image_folder + '/' + data, 'r', newline='') as csvfile:
+                            areareader = csv.reader(csvfile, delimiter = ',', quotechar = '|')
+                            for row in areareader:
+                                area, xcenter, ycenter = row[0], row[1], row[2]
+                                Oocyte.objects.create(crab=crab, image = image, area = area, center_x = xcenter, center_y = ycenter)
 
     def __str__(self):
         return ("crab (pk=" + str(self.id) + ", sample_num=" + str(self.sample_num) + ")")

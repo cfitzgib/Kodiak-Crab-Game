@@ -48,6 +48,7 @@
     {% for idx, crab in analyzedCrabs %}
       <input type="hidden" id="lat{{idx}}" value="{{crab.latitude}}">
       <input type="hidden" id="long{{idx}}" value="{{crab.longitude}}">
+      <input type="hidden" id="wt{{idx}}" value="{{crab.water_temp}}">
     {% endfor %}
     <input type="hidden" id="length" value="{{crabCount}}">
 
@@ -66,14 +67,16 @@
       for (i = 0; i < $("#length").val(); i++) {
         var crabLat = parseFloat($("#lat"+i).val());
         var crabLong = parseFloat($("#long"+i).val());
+        var crabTemp = parseFloat($("#wt"+i).val());
+        var title_string = 'Water Temperature: ' + crabTemp
         console.log(crabLat);
         console.log(crabLong);
         var crabLatLng = new google.maps.LatLng(crabLat, crabLong);
         marker = new google.maps.Marker({
             position: crabLatLng,
             map: map, 
-            title: 'Hello World!'
-        })
+            title: title_string
+        });
       }
     }
   
