@@ -21,6 +21,7 @@ class Crab(models.Model):
     longitude = models.FloatField()
     water_temp = models.FloatField() 
 
+    #Called by a crab when it has 10 completed oocytes. It will then send its data to socrata.
     def send_crab_data(self):
         CONVERSION_RATE = .00000701549
         oocytes = Oocyte.objects.filter(crab=self).filter(chosen_count=10)
@@ -62,7 +63,6 @@ class Crab(models.Model):
     def create_image_instances(cls, path):
         for root, dirs, files in os.walk(path, topdown=False):
             for folder in dirs:
-                print(folder)
                 sn = int(folder)
                 client = Socrata("noaa-fisheries-afsc.data.socrata.com", "q3DhSQxvyWbtq1kLPs5q7jwQp",  username="cfitzgib@andrew.cmu.edu", password = "Kodiak18!")
                 crab_info = client.get("n49y-v5db", where=("sample = " + str(sn)))
@@ -93,7 +93,6 @@ class Crab(models.Model):
                         image = Image(crab=crab, csv = data)
                         image.original_img.save(tag + "_resize.png", orig, save=False)
                         image.binarized_img.save(tag + "_label.png", label, save=False)
-                        print(image.original_img)
                         image.save()
 
                         #read csv for image and import new oocyte instances
@@ -107,12 +106,6 @@ class Crab(models.Model):
     def __str__(self):
         return ("crab (pk=" + str(self.id) + ", sample_num=" + str(self.sample_num) + ")")
         #return str((self.sample_num, self.done_oocytes, self.year, self.longitude, self.latitude, self.water_temp))
-
-    # method to increment the crab's done_oocyte once chosen_count reaches desired accuracy --> if conditional
-
-    # method to stop displaying the crab to users once done_oocytes reaches 10 
-
-    # if done_oocytes reaches 10, method to delete all instances of Oocytes that do not have chosen_count 10
 
 def get_upload_path(instance, filename):
     return '{0}/{1}'.format(instance.crab.sample_num, filename)
@@ -208,21 +201,6 @@ class PlaySession(models.Model):
             crab = sessionPhotos[i].crab
             analyzedCrabs.append(crab)
         return analyzedCrabs
-
-class SchoolClass(models.Model):
-    className = models.CharField(max_length = 100)
-
-    def __str__(self):
-        return ("schoolClass (pk=" + str(self.id) + ")")
-
-class Intermediate(models.Model):
-    oocyte = models.ForeignKey(Oocyte, on_delete = models.CASCADE)
-    session = models.ForeignKey(PlaySession, on_delete = models.CASCADE) # need to fix later!!!!
-    schoolClass = models.ForeignKey(SchoolClass, on_delete = models.CASCADE)
-
-    def __str__(self):
-        return ("schoolClass (pk=" + str(self.id) + ")")
-
 
 from django.dispatch import receiver
 
