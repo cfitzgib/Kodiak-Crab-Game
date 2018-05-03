@@ -46,6 +46,7 @@ The images directory specified in the command must be configured a specific way.
 			untitled000.tif
 		4
 
+Running this command will take any .tif file and create 2 new files, a resized version of the original and a labeled version that has been filtered. These can then be used to load into the Crab n' Click application. Do NOT change the file names after the processing has been done.
 
 With the images resized and labeled, first run the migrations:
 
