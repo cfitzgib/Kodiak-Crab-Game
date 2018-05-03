@@ -8,4 +8,5 @@ urlpatterns = [
     path('result/<int:session_id>/', views.result, name='result'),
     path('ajax/find_oocyte/', views.find_oocyte),
     path('ajax/up_oocyte/', views.increment_oocyte),
+    path('result/<int:session_id>/ajax/remove_crabs/', views.remove_crabs),
  ]

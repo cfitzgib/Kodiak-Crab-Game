@@ -46,7 +46,7 @@
   </nav>
 
     {% for idx, crab in analyzedCrabs %}
-      <input type="hidden" id="lat{{idx}}" value="{{crab.latitude}}">
+      <input type="hidden" id="lat{{idx}}" value="{{crab.latitude}}" class="{{crab.id}}">
       <input type="hidden" id="long{{idx}}" value="{{crab.longitude}}">
       <input type="hidden" id="wt{{idx}}" value="{{crab.water_temp}}">
     {% endfor %}
@@ -62,7 +62,7 @@
         center: {lat: 59.14325, lng: -174.44471},
         zoom: 5
       });
-
+      var crab_list = []
       var marker;
       for (i = 0; i < $("#length").val(); i++) {
         var crabLat = parseFloat($("#lat"+i).val());
@@ -75,9 +75,20 @@
         marker = new google.maps.Marker({
             position: crabLatLng,
             map: map, 
-            title: title_string
-        });
+          title: title_string
+        })
+        var crab_id = $("#lat"+i).attr("class");
+        crab_list.push(crab_id);
+
       }
+      crab_list = crab_list.join(",");
+      console.log(crab_list);
+      // Push the crab id list to Django
+      $.ajax({
+        url: 'ajax/remove_crabs/',
+        dataType: "json",
+        data: {"crab_ids": crab_list}
+      });
     }
   
   </script>
