@@ -4,7 +4,7 @@ from django.utils import timezone
 from django.core.files import File
 import datetime
 import random
-import os
+import os, json
 import csv
 import re
 import math
@@ -21,10 +21,11 @@ class Crab(models.Model):
     longitude = models.FloatField()
     water_temp = models.FloatField() 
 
+    #Called by a crab when it has 10 completed oocytes. It will then send its data to socrata.
     def send_crab_data(self):
         CONVERSION_RATE = .00000701549
         oocytes = Oocyte.objects.filter(crab=self).filter(chosen_count=10)
-        client = Socrata("noaa-fisheries-afsc.data.socrata.com", None,  username="cfitzgib@andrew.cmu.edu", password = "Kodiak18!")
+        client = Socrata("noaa-fisheries-afsc.data.socrata.com", "q3DhSQxvyWbtq1kLPs5q7jwQp",  username="cfitzgib@andrew.cmu.edu", password = "Kodiak18!")
         data = {'area_2': '',
                  'area_5': '', 
                  'calibration_5x': 0.00028, 
@@ -57,52 +58,54 @@ class Crab(models.Model):
 
     #creates a new crab, finds all of its images and adds them to the system
     #also imports oocyte instances for each image
+    #find path, for each folder, create crab, read its data from socrata, read all the images on that path
     @classmethod
-    def create_image_instances(cls, sn, yr, lon, lat, wt):
-        crab = Crab(sample_num=sn, year=yr, longitude=lon, latitude=lat, water_temp = wt)
-        
-        #This path would be where all the images are stored locally before upload
-        #Python script should be pushing images to this path along with its csv file
-        path = '/Users/heramiao/Documents/Junior Year Semester 2/67-373/KodiakSite/crab_images/' + str(crab.sample_num)
-        crab.save()
+    def create_image_instances(cls, path):
+        for root, dirs, files in os.walk(path, topdown=False):
+            for folder in dirs:
+                sn = int(folder)
+                client = Socrata("noaa-fisheries-afsc.data.socrata.com", "q3DhSQxvyWbtq1kLPs5q7jwQp",  username="cfitzgib@andrew.cmu.edu", password = "Kodiak18!")
+                crab_info = client.get("n49y-v5db", where=("sample = " + str(sn)))
+                lat, lon = crab_info[0]['location_1']['latitude'], crab_info[0]['location_1']['longitude']
+                yr, wt = crab_info[0]['year'], crab_info[0]['bottom_temp_c']
+                crab = Crab(sample_num=sn, year=yr, longitude=lon, latitude=lat, water_temp = wt)
+            
+            
+                #This path would be where all the images are stored locally before upload
+                #Python script should be pushing images to this path along with its csv file
+                image_folder = 'D:/School/67-373 IS Consulting Project/crab_images/' + str(sn)
+                crab.save()
 
-        #image = Image(crab.id, path + '/oocyte_resized.png', path + '/oocyte_labeled.png', path + '/oocyte_area.csv')
-        for filename in os.listdir(path):
-            #look for a resized image and then find its labeled counterpart
-            if(filename[-12:] == "_resized.png"):
-                #tag is the identifier for that image
-                tag = filename[:-12]
-                
-                #open both original and resized
-                orig = File(open(path + '/' + tag + '_resized.png', 'rb'))
-                label = File(open(path + '/' + tag + '_labeled.png', 'rb'))
+                #image = Image(crab.id, path + '/oocyte_resized.png', path + '/oocyte_labeled.png', path + '/oocyte_area.csv')
+                for filename in os.listdir(image_folder):
+                    #look for a resized image and then find its labeled counterpart
+                    if(filename[-12:] == "_resized.png"):
+                        #tag is the identifier for that image
+                        tag = filename[:-12]
+                        
+                        #open both original and resized
+                        orig = File(open(image_folder + '/' + tag + '_resized.png', 'rb'))
+                        label = File(open(image_folder + '/' + tag + '_labeled.png', 'rb'))
 
-                data = tag + "_area.csv"
+                        data = tag + "_area.csv"
 
-                #create Image instance and save images to the media root directory
-                image = Image(crab=crab, csv = data)
-                image.original_img.save(tag + "_resize.png", orig, save=False)
-                image.binarized_img.save(tag + "_label.png", label, save=False)
-                print(image.original_img)
-                image.save()
+                        #create Image instance and save images to the media root directory
+                        image = Image(crab=crab, csv = data)
+                        image.original_img.save(tag + "_resize.png", orig, save=False)
+                        image.binarized_img.save(tag + "_label.png", label, save=False)
+                        image.save()
 
-                #read csv for image and import new oocyte instances
-                #csv must be located in the original path directory where the images were stored
-                with open(path + '/' + data, 'r', newline='') as csvfile:
-                    areareader = csv.reader(csvfile, delimiter = ',', quotechar = '|')
-                    for row in areareader:
-                        area, xcenter, ycenter = row[0], row[1], row[2]
-                        Oocyte.objects.create(crab=crab, image = image, area = area, center_x = xcenter, center_y = ycenter)
+                        #read csv for image and import new oocyte instances
+                        #csv must be located in the original path directory where the images were stored
+                        with open(image_folder + '/' + data, 'r', newline='') as csvfile:
+                            areareader = csv.reader(csvfile, delimiter = ',', quotechar = '|')
+                            for row in areareader:
+                                area, xcenter, ycenter = row[0], row[1], row[2]
+                                Oocyte.objects.create(crab=crab, image = image, area = area, center_x = xcenter, center_y = ycenter)
 
     def __str__(self):
         return ("crab (pk=" + str(self.id) + ", sample_num=" + str(self.sample_num) + ")")
         #return str((self.sample_num, self.done_oocytes, self.year, self.longitude, self.latitude, self.water_temp))
-
-    # method to increment the crab's done_oocyte once chosen_count reaches desired accuracy --> if conditional
-
-    # method to stop displaying the crab to users once done_oocytes reaches 10 
-
-    # if done_oocytes reaches 10, method to delete all instances of Oocytes that do not have chosen_count 10
 
 def get_upload_path(instance, filename):
     return '{0}/{1}'.format(instance.crab.sample_num, filename)
@@ -198,21 +201,6 @@ class PlaySession(models.Model):
             crab = sessionPhotos[i].crab
             analyzedCrabs.append(crab)
         return analyzedCrabs
-
-class SchoolClass(models.Model):
-    className = models.CharField(max_length = 100)
-
-    def __str__(self):
-        return ("schoolClass (pk=" + str(self.id) + ")")
-
-class Intermediate(models.Model):
-    oocyte = models.ForeignKey(Oocyte, on_delete = models.CASCADE)
-    session = models.ForeignKey(PlaySession, on_delete = models.CASCADE) # need to fix later!!!!
-    schoolClass = models.ForeignKey(SchoolClass, on_delete = models.CASCADE)
-
-    def __str__(self):
-        return ("schoolClass (pk=" + str(self.id) + ")")
-
 
 from django.dispatch import receiver
 

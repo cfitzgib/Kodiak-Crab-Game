@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from .models import Crab, Image, Oocyte, Intermediate, PlaySession, SchoolClass
+from .models import Crab, Image, Oocyte,  PlaySession
 import random
 import json
 

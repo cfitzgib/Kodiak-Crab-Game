@@ -36,22 +36,19 @@
   <nav class="cyan darken-2" role="navigation">
       <div class="nav-wrapper container" id="nav-content">
         <a id="logo-container" href="{% url 'crabgame:index' %}" class="brand-logo"><img src="{% static 'crabgame/img/logo.png' %}" id="logo"/></a>
-        <ul class="right hide-on-med-and-down">
-          <li><a href="#">NOAA</a></li>
-          <li><a href="#">KFRC</a></li>
-          <li><a href="#">KIBSD</a></li>
-        </ul>
-  
-        <ul id="nav-mobile" class="sidenav">
-          <li><a href="#">Navbar Link</a></li>
-        </ul>
-        <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-      </div>
-    </nav>
+
+
+      <ul id="nav-mobile" class="sidenav">
+        <li><a href="#">About Us</a></li>
+      </ul>
+      <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+    </div>
+  </nav>
 
     {% for idx, crab in analyzedCrabs %}
       <input type="hidden" id="lat{{idx}}" value="{{crab.latitude}}">
       <input type="hidden" id="long{{idx}}" value="{{crab.longitude}}">
+      <input type="hidden" id="wt{{idx}}" value="{{crab.water_temp}}">
     {% endfor %}
     <input type="hidden" id="length" value="{{crabCount}}">
 
@@ -70,14 +67,16 @@
       for (i = 0; i < $("#length").val(); i++) {
         var crabLat = parseFloat($("#lat"+i).val());
         var crabLong = parseFloat($("#long"+i).val());
+        var crabTemp = parseFloat($("#wt"+i).val());
+        var title_string = 'Water Temperature: ' + crabTemp
         console.log(crabLat);
         console.log(crabLong);
         var crabLatLng = new google.maps.LatLng(crabLat, crabLong);
         marker = new google.maps.Marker({
             position: crabLatLng,
             map: map, 
-            title: 'Hello World!'
-        })
+            title: title_string
+        });
       }
     }
   
