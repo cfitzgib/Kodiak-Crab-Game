@@ -43,4 +43,17 @@ def result(request, session_id):
     crabCount = len(analyzedCrabs)
     return render(request, 'crabgame/result.html', {'analyzedCrabs': enumerate(analyzedCrabs), 'crabCount': crabCount})
 
+# Remove crabs that have reached done_oocytes count 
+def remove_crabs(request, session_id):
+    crab_ids = request.GET.get('crab_ids')
+    crab_ids = set(crab_ids.split(","))
+    for elem in crab_ids:
+        crab_id = int(elem)
+        crab = Crab.objects.get(pk=crab_id)
+        print("The crab pk is " + str(crab_id))
+        if crab.done_oocytes >= 10:
+            crab.delete()
+    return HttpResponse()
+
+
 
