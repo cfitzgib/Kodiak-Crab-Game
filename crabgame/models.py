@@ -73,7 +73,7 @@ class Crab(models.Model):
             
                 #This path would be where all the images are stored locally before upload
                 #Python script should be pushing images to this path along with its csv file
-                image_folder = 'D:/School/67-373 IS Consulting Project/crab_images/' + str(sn)
+                image_folder = path + str(sn)
                 crab.save()
 
                 #image = Image(crab.id, path + '/oocyte_resized.png', path + '/oocyte_labeled.png', path + '/oocyte_area.csv')

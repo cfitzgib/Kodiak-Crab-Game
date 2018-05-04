@@ -18,21 +18,44 @@ nav {
 }
 
 #nav-content {
-  margin-left: 60px;
+  width: 93%;
 }
 
 #startScreen {
   height: 535px;
   background: url("/static/crabgame/img/crabs1.jpg") no-repeat;
+  opacity: 0.9; 
+}
+
+#intro {
+  width: 60%;
 }
 
 #content {
-  margin-right: 75px;
-  margin-left: 75px;
+  margin-right: 100px;
+  margin-left: 100px;
+}
+
+h4 {
+  font-family: 'Roboto Slab', serif;
+}
+
+#aboutGame {
+line-height: 1.8;
+text-align: justify;
+}
+
+#images {
+  padding-left: 14%;
+  margin-top: 3%;
 }
 
 #contactRow {
   margin: 50px;
+}
+
+a:hover {
+  text-decoration: underline;
 }
 
 #playImg {

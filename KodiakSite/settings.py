@@ -25,7 +25,7 @@ SECRET_KEY = 't1ro0vs&k7^(%jj#mdj0-^h6a)h0m^1ujkth@82fgnnl)l=_(5'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['blooming-earth-30436.herokuapp.com', '127.0.0.1']
+ALLOWED_HOSTS = ['blooming-earth-30436.herokuapp.com', '127.0.0.1', 'localhost']
 
 
 # Application definition
