@@ -68,9 +68,7 @@
         var crabLat = parseFloat($("#lat"+i).val());
         var crabLong = parseFloat($("#long"+i).val());
         var crabTemp = parseFloat($("#wt"+i).val());
-        var title_string = 'Water Temperature: ' + crabTemp
-        console.log(crabLat);
-        console.log(crabLong);
+        var title_string = 'Water Temperature: ' + crabTemp;
         var crabLatLng = new google.maps.LatLng(crabLat, crabLong);
         marker = new google.maps.Marker({
             position: crabLatLng,

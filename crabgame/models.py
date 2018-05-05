@@ -65,8 +65,7 @@ class Crab(models.Model):
         for root, dirs, files in os.walk(path, topdown=False):
             for folder in dirs:
                 sn = int(folder)
-                print(folder)
-                print(Crab.objects.filter(sample_num = sn).count())
+                #If the crab is not already in the system, then create it
                 if(Crab.objects.filter(sample_num = sn).count() == 0):
                     client = Socrata("noaa-fisheries-afsc.data.socrata.com", "q3DhSQxvyWbtq1kLPs5q7jwQp",  username="cfitzgib@andrew.cmu.edu", password = "Kodiak18!")
                     crab_info = client.get("n49y-v5db", where=("sample = " + str(sn)))
@@ -83,7 +82,6 @@ class Crab(models.Model):
                         image_folder = path + '/' + str(sn)
                     crab.save()
 
-                    #image = Image(crab.id, path + '/oocyte_resized.png', path + '/oocyte_labeled.png', path + '/oocyte_area.csv')
                     for filename in os.listdir(image_folder):
                         #look for a resized image and then find its labeled counterpart
                         if(filename[-12:] == "_resized.png"):
@@ -183,7 +181,7 @@ class PlaySession(models.Model):
     completed_photos = models.IntegerField(default = 0)
 
     # method to end PlaySession when completed_photos is incremented to equal num_photos
-    global photos
+    #global photos
     # method to increment completed_photos
     def __str__(self):
         return ("playSession (pk=" + str(self.id) + ")")
@@ -199,15 +197,21 @@ class PlaySession(models.Model):
             playImg = random.sample(images, 2) # pick 3 random images from each crab
             for j in range (0, len(playImg)):
                 photos.append(playImg[j])
+                psi = PlaySessionImage(image = playImg[j], session = self)
+                psi.save()
         return photos
     
     def getCrabs(self):
         analyzedCrabs = []
-        sessionPhotos = photos
+        sessionPhotos = PlaySessionImage.objects.filter(session = self)
         for i in range(0, len(sessionPhotos)):
-            crab = sessionPhotos[i].crab
+            crab = sessionPhotos[i].image.crab
             analyzedCrabs.append(crab)
         return analyzedCrabs
+
+class PlaySessionImage(models.Model):
+    image = models.ForeignKey(Image, on_delete = models.CASCADE)
+    session = models.ForeignKey(PlaySession, on_delete = models.CASCADE)
 
 from django.dispatch import receiver
 

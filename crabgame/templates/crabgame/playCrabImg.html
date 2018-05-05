@@ -45,10 +45,11 @@
           <img id="binarized{{idx}}" src="/media/{{ photo.crab.sample_num }}/untitled{{ photo.get_img_num }}_label.png"/>
         </div>
         <input type="hidden" id= "img{{idx}}" name="{{photo.pk}}" value="{{ photo.pk }}" />
+        <input type="hidden" id= "crab{{ idx }}" value="{{photo.crab.id}}">
         {% if idx < 7 %}
           <a class="waves-effect waves-light btn deep-orange lighten-1" id="next" onclick= "nextImg()">Next</a>
         {% else %}
-          <a class="waves-effect waves-light btn deep-orange lighten-1" id="submit" href="{% url 'crabgame:result' session_id %}">Submit</a>
+          <a class="waves-effect waves-light btn deep-orange lighten-1" id="submit" href="{% url 'crabgame:result' session_id %}" >Submit</a>
         {% endif %}
       </div>
 
