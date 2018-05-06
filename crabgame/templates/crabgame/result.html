@@ -49,10 +49,22 @@
       <input type="hidden" id="lat{{idx}}" value="{{crab.latitude}}" class="{{crab.id}}">
       <input type="hidden" id="long{{idx}}" value="{{crab.longitude}}">
       <input type="hidden" id="wt{{idx}}" value="{{crab.water_temp}}">
+      <input type="hidden" id="sc{{idx}}" value="{{crab.shell_condition}}">
     {% endfor %}
     <input type="hidden" id="length" value="{{crabCount}}">
+    <div class="container" style="height:75%; width:100%;">
+      <div class = "row" style="height:100%; width:100%;">
+        <div id = "info" class = "col s6">
+          Your Results:<br/>
+          Thanks for playing and helping to collect data for the NOAA. Your data will be used to help determine the effects of global warming
+          on crabs throughout the Bering Sea. You can see the crabs you helped collect data on using the map to your right, and it also has data regarding the water temperature they live in and their shell condition. <br/><br/>
 
-  <div id="map"></div>
+          A crab's shell condition can tell us a lot about their age and also the quality / number of oocytes they will have. The higher a crab's shell condition, the older they are, and they will have blurrier and fewer oocytes. A 5 is the maximum and 2 is the minimum.
+        </div>
+        <div id="map" class = "col s6"></div>
+      </div>
+    </div>
+  
 
   <script>
 
@@ -68,9 +80,8 @@
         var crabLat = parseFloat($("#lat"+i).val());
         var crabLong = parseFloat($("#long"+i).val());
         var crabTemp = parseFloat($("#wt"+i).val());
-        var title_string = 'Water Temperature: ' + crabTemp
-        console.log(crabLat);
-        console.log(crabLong);
+        var shellCondition = parseFloat($("#sc" + i).val());
+        var title_string = 'Water Temperature: ' + crabTemp + '\n Shell Condition: ' + shellCondition;
         var crabLatLng = new google.maps.LatLng(crabLat, crabLong);
         marker = new google.maps.Marker({
             position: crabLatLng,
