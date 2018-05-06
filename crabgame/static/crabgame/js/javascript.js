@@ -27,17 +27,6 @@ function hide_inactive_images(){
   }
 }
 
-function getUrl(){
-  session = $("#session").val();
-  let url  = 'result/' + session;
-  for(let j = 0; j < 8; j+=2){
-    let id = $("#crab" + j).val();
-    url += '/' + id;
-  }
-  console.log(url);
-  $(location).attr('href', url)
-}
-
 //Hide the divs to start off
 $(document).ready(function() {
   hide_inactive_images();

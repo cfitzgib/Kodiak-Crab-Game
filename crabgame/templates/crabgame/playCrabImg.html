@@ -44,8 +44,7 @@
         <div class="col s6 m6 l6">
           <img id="binarized{{idx}}" src="/media/{{ photo.crab.sample_num }}/untitled{{ photo.get_img_num }}_label.png"/>
         </div>
-        <input type="hidden" id= "img{{idx}}" name="{{photo.pk}}" value="{{ photo.pk }}" />
-        <input type="hidden" id= "crab{{ idx }}" value="{{photo.crab.id}}">
+        <input type="hidden" id= "img{{idx}}" name="{{photo.pk}}" value="{{ photo.pk }}" >
         {% if idx < 7 %}
           <a class="waves-effect waves-light btn deep-orange lighten-1" id="next" onclick= "nextImg()">Next</a>
         {% else %}

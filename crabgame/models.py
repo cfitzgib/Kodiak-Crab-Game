@@ -20,6 +20,7 @@ class Crab(models.Model):
     latitude = models.FloatField()
     longitude = models.FloatField()
     water_temp = models.FloatField() 
+    shell_condition = models.IntegerField()
 
     #Called by a crab when it has 10 completed oocytes. It will then send its data to socrata.
     def send_crab_data(self):
@@ -71,7 +72,8 @@ class Crab(models.Model):
                     crab_info = client.get("n49y-v5db", where=("sample = " + str(sn)))
                     lat, lon = crab_info[0]['location_1']['latitude'], crab_info[0]['location_1']['longitude']
                     yr, wt = crab_info[0]['year'], crab_info[0]['bottom_temp_c']
-                    crab = Crab(sample_num=sn, year=yr, longitude=lon, latitude=lat, water_temp = wt)
+                    sc = crab_info[0]['shell_condition']
+                    crab = Crab(sample_num=sn, year=yr, longitude=lon, latitude=lat, water_temp = wt, shell_condition = sc)
                 
                 
                     #This path would be where all the images are stored locally before upload
