@@ -127,8 +127,9 @@ class Image(models.Model):
 
     def get_img_num(self):
         file = self.original_img.name
-        img_num = file[10:13]
-        return img_num
+        halfname = file.split("untitled")[1]
+        num = halfname.split("_")[0]
+        return num
 
     def __str__(self):
         return ("image (pk=" + str(self.id) + ")")
