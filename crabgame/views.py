@@ -6,7 +6,7 @@ import json
 
 # Create your views here.
 
-# if start start button clicked, create instance of PlaySession and get 12 random photos to play 
+# if start start button or play again clicked, create instance of PlaySession and get 12 random photos to play 
 def index(request):
     if request.method == 'POST':
         playSessionInstance = PlaySession()
@@ -38,6 +38,13 @@ def detail(request, image_id):
 
 # display the result page after the user have completed a session
 def result(request, session_id):
+    # if click play again button on results page, start new play session
+    if request.method == 'POST':
+        playSessionInstance = PlaySession()
+        playSessionInstance.save()
+        photos = playSessionInstance.setPhotos()
+        total = len(photos)
+        return render(request, 'crabgame/playCrabImg.html', {'photos': enumerate(photos), 'total': total, 'session_id': playSessionInstance.id})
     session = PlaySession.objects.get(pk=session_id)
     analyzedCrabs = session.getCrabs()
     crabCount = len(analyzedCrabs)

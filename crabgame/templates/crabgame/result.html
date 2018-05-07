@@ -33,17 +33,24 @@
 </head>
 
 <body>
-  <nav class="cyan darken-2" role="navigation">
-      <div class="nav-wrapper container" id="nav-content">
-        <a id="logo-container" href="{% url 'crabgame:index' %}" class="brand-logo"><img src="{% static 'crabgame/img/logo.png' %}" id="logo"/></a>
-
-
-      <ul id="nav-mobile" class="sidenav">
-        <li><a href="#">About Us</a></li>
-      </ul>
-      <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-    </div>
-  </nav>
+    <nav class="cyan darken-2" role="navigation">
+        <div class="nav-wrapper container" id="nav-content">
+          <a id="logo-container" href="{% url 'crabgame:index' %}" class="brand-logo"><img src="{% static 'crabgame/img/logo.png' %}" id="logo"/></a>
+          <ul class="right hide-on-med-and-down">
+            <li><a href="http://www.noaa.gov" target="_blank">
+              <img src="{% static 'crabgame/img/noaalogo.jpg' %}" id="noaalogo" height=110/></a>
+            </li>
+            <li><a href="https://www.kibsd.org" target="_blank">
+              <img src="{% static 'crabgame/img/KIBSDlogo.png' %}" id="noaalogo" height=110/></a>
+            </li>
+          </ul>
+    
+          <ul id="nav-mobile" class="sidenav">
+            <li><a href="#">Navbar Link</a></li>
+          </ul>
+          <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+        </div>
+      </nav>
 
     {% for idx, crab in analyzedCrabs %}
       <input type="hidden" id="lat{{idx}}" value="{{crab.latitude}}" class="{{crab.id}}">
@@ -52,22 +59,26 @@
       <input type="hidden" id="sc{{idx}}" value="{{crab.shell_condition}}">
     {% endfor %}
     <input type="hidden" id="length" value="{{crabCount}}">
-    <div class="container" style="height:75%; width:100%;">
+    <div class="container deep-purple lighten-3" style="height:83%; width:100%;">
       <div class = "row" style="height:100%; width:100%;">
-        <div id = "info" class = "col s6">
-          Your Results:<br/>
-          Thanks for playing and helping to collect data for the NOAA. Your data will be used to help determine the effects of global warming
-          on crabs throughout the Bering Sea. You can see the crabs you helped collect data on using the map to your right, and it also has data regarding the water temperature they live in and their shell condition. <br/><br/>
-
-          A crab's shell condition can tell us a lot about their age and also the quality / number of oocytes they will have. The higher a crab's shell condition, the older they are, and they will have blurrier and fewer oocytes. A 5 is the maximum and 2 is the minimum.
+        <div id="map" class = "col s8"></div>
+        <div id = "legend" class = "col s4 deep-purple lighten-3">  
+            <h5>Thanks for contributing to the Kodiak Lab Shellfish Assessment Program crab research efforts!</h5>
+            <p>Your data will be used to help determine the effects of global warming on crabs throughout the Bering Sea.</p>
+            <p>On the map, you can see the location of the crabs you helped analyze during the game. Hover over each marker on the map to see the crab's water temperature (&#8451) they were collected in and its shell condition</p>
+            <p>A crab's shell condition can tell us a lot about their age and also the quality / number of oocytes they will have. The higher a crab's shell condition, the older they are. They will have blurrier and fewer oocytes. A 5 is the maximum and 2 is the minimum.</p>
+            <br>
+            <div id="playAgain" class="center-align">
+            <form method="post" action="">{% csrf_token %}
+                <button id="playAgainBtn" class="btn-large waves-effect deep-orange lighten-1" type="submit">Play Again</button>
+            </form>
+            </div>
         </div>
-        <div id="map" class = "col s6"></div>
       </div>
     </div>
   
 
   <script>
-
     var map;
     function initMap() {
       map = new google.maps.Map(document.getElementById('map'), {
@@ -90,7 +101,6 @@
         })
         var crab_id = $("#lat"+i).attr("class");
         crab_list.push(crab_id);
-
       }
       crab_list = crab_list.join(",");
       console.log(crab_list);

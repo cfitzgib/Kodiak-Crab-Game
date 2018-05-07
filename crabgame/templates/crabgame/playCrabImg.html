@@ -18,13 +18,16 @@
 
   <!-- Navigation Bar -->
   <nav class="cyan darken-2" role="navigation">
-      <div class="nav-wrapper container" id="nav-content">
-        <a id="logo-container" href="{% url 'crabgame:index' %}" class="brand-logo"><img src="{% static 'crabgame/img/logo.png' %}" id="logo"/></a>
-        <ul class="right hide-on-med-and-down">
-          <li><a href="#">NOAA</a></li>
-          <li><a href="#">KFRC</a></li>
-          <li><a href="#">KIBSD</a></li>
-        </ul>
+    <div class="nav-wrapper container" id="nav-content">
+      <a id="logo-container" href="{% url 'crabgame:index' %}" class="brand-logo"><img src="{% static 'crabgame/img/logo.png' %}" id="logo"/></a>
+      <ul class="right hide-on-med-and-down">
+        <li><a href="http://www.noaa.gov" target="_blank">
+          <img src="{% static 'crabgame/img/noaalogo.jpg' %}" id="noaalogo" height=110/></a>
+        </li>
+        <li><a href="https://www.kibsd.org" target="_blank">
+          <img src="{% static 'crabgame/img/KIBSDlogo.png' %}" id="noaalogo" height=110/></a>
+        </li>
+      </ul>
 
       <ul id="nav-mobile" class="sidenav">
         <li><a href="#">Navbar Link</a></li>

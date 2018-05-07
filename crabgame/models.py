@@ -126,8 +126,11 @@ class Image(models.Model):
     csv = models.CharField(max_length = 100)
 
     def get_img_num(self):
+        # example file name: '63/untitled014_resize.png'
         file = self.original_img.name
+        # example halfname: '014_resize.png'
         halfname = file.split("untitled")[1]
+        # example num: 014
         num = halfname.split("_")[0]
         return num
 
