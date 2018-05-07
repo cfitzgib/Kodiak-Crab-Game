@@ -62,7 +62,7 @@
     <div class="container deep-purple lighten-3" style="height:83%; width:100%;">
       <div class = "row" style="height:100%; width:100%;">
         <div id="map" class = "col s8"></div>
-        <div id = "legend" class = "col s4 deep-purple lighten-3">  
+        <div id = "legend" class = "col s4">  
             <h5>Thanks for contributing to the Kodiak Lab Shellfish Assessment Program crab research efforts!</h5>
             <p>Your data will be used to help determine the effects of global warming on crabs throughout the Bering Sea.</p>
             <p>On the map, you can see the location of the crabs you helped analyze during the game. Hover over each marker on the map to see the crab's water temperature (&#8451) they were collected in and its shell condition</p>
@@ -103,7 +103,6 @@
         crab_list.push(crab_id);
       }
       crab_list = crab_list.join(",");
-      console.log(crab_list);
       // Push the crab id list to Django
       $.ajax({
         url: 'ajax/remove_crabs/',
