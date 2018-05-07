@@ -31,6 +31,7 @@ nav {
 
 #startScreen {
   height: 535px;
+  width: 100%;
   background: url("/static/crabgame/img/crabs1.jpg") no-repeat;
   opacity: 0.9; 
 }
