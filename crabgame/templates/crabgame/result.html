@@ -44,11 +44,6 @@
               <img src="{% static 'crabgame/img/KIBSDlogo.png' %}" id="noaalogo" height=110/></a>
             </li>
           </ul>
-    
-          <ul id="nav-mobile" class="sidenav">
-            <li><a href="#">Navbar Link</a></li>
-          </ul>
-          <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
         </div>
       </nav>
 
@@ -60,7 +55,7 @@
     {% endfor %}
     <input type="hidden" id="length" value="{{crabCount}}">
     <div class="container deep-purple lighten-3" style="height:83%; width:100%;">
-      <div class = "row" style="height:100%; width:100%;">
+      <div class = "row" style="height:100%; width:100%; margin-bottom: 0px;">
         <div id="map" class = "col s8"></div>
         <div id = "legend" class = "col s4">  
             <h5>Thanks for contributing to the Kodiak Lab Shellfish Assessment Program crab research efforts!</h5>
@@ -109,37 +104,37 @@
         dataType: "json",
         data: {"crab_ids": crab_list}
       });
-
-      var markerPositionLab = new google.maps.LatLng(57.7814537999, -152.3964797)
-      var markerIconLab = {
-        url: "/static/crabgame/img/kodiaklab.jpg",
-        //The size image file.
-        size: new google.maps.Size(225, 120),
-        //The point on the image to measure the anchor from. 0, 0 is the top left.
-        origin: new google.maps.Point(0, 0),
-        //The x y coordinates of the anchor point on the marker. e.g. If your map marker was a drawing pin then the anchor would be the tip of the pin.
-        anchor: new google.maps.Point(189, 116)
-      }
-      //Setting the shape to be used with the Glastonbury map marker.
-      var markerShapeLab = {
-        coord: [12,4,216,22,212,74,157,70,184,111,125,67,6,56],
-        type: 'poly'
-      };
-      //Creating the Glastonbury map marker.
-      markerLab = new google.maps.Marker({
-      //uses the position set above.
-      position: markerPositionLab,
-      //adds the marker to the map.
-      map: map,
-      title: 'Kodiak Lab',
-      //assigns the icon image set above to the marker.
-      icon: markerIconLab,
-      //assigns the icon shape set above to the marker.
-      shape: markerShapeLab,
-      //sets the z-index of the map marker.
-      zIndex:102
-      });
     }
+
+    // var markerPositionLab = new google.maps.LatLng(57.7814537999, -152.3964797)
+    // var markerIconLab = {
+    //   url: "/static/crabgame/img/kodiaklab.jpg",
+    //   //The size image file.
+    //   size: new google.maps.Size(225, 120),
+    //   //The point on the image to measure the anchor from. 0, 0 is the top left.
+    //   origin: new google.maps.Point(0, 0),
+    //   //The x y coordinates of the anchor point on the marker. e.g. If your map marker was a drawing pin then the anchor would be the tip of the pin.
+    //   anchor: new google.maps.Point(189, 116)
+    // }
+    // //Setting the shape to be used with the Glastonbury map marker.
+    // var markerShapeLab = {
+    //   coord: [12,4,216,22,212,74,157,70,184,111,125,67,6,56],
+    //   type: 'poly'
+    // };
+    // //Creating the Glastonbury map marker.
+    // markerLab = new google.maps.Marker({
+    // //uses the position set above.
+    // position: markerPositionLab,
+    // //adds the marker to the map.
+    // map: map,
+    // title: 'Kodiak Lab',
+    // //assigns the icon image set above to the marker.
+    // icon: markerIconLab,
+    // //assigns the icon shape set above to the marker.
+    // shape: markerShapeLab,
+    // //sets the z-index of the map marker.
+    // zIndex:102
+    // });
   
   </script>
 
