@@ -17,9 +17,12 @@ nav {
   height: 110px;
 }
 
+#logo-container {
+  float: left;
+}
+
 #nav-content {
-  margin-right: 0px;
-  width: 97%;
+  width: 100%;
 }
 
 #adminlogin, #socratalogin {
@@ -30,7 +33,7 @@ nav {
 }
 
 #startScreen {
-  height: 535px;
+  height: 535px; 
   width: 100%;
   background: url("/static/crabgame/img/crabs1.jpg") no-repeat;
   background-size: 100%;
@@ -83,6 +86,7 @@ i.material-icons {
 #playImg {
   padding: 25px;
   padding-bottom: 10px;
+  margin-bottom: 0px;
 }
 
 #next, #submit {
