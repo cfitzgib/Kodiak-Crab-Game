@@ -35,18 +35,24 @@
     <!-- Display images of crabs --> 
     {% for idx, photo in photos %}
       <div class="row" id="image{{idx}}">
-        <h4>Image {{ idx|add:"1" }}/{{ total }}</h4>
-        <a class="modal-trigger" href="#modal">
-            <i class="small material-icons" style="font-size:40px">help_outline</i>
-        </a>
-        <div class="col s6 m6 l6">
-          <img id="original" src="/media/{{ photo.crab.sample_num }}/untitled{{ photo.get_img_num }}_resize.png"/>
+        <div class = "row">
+          <h4>Image {{ idx|add:"1" }}/{{ total }}</h4>
         </div>
-        <div class="col s6 m6 l6">
-          <img id="binarized{{idx}}" src="/media/{{ photo.crab.sample_num }}/untitled{{ photo.get_img_num }}_label.png"/>
+        <div class = "row">
+          <a class="modal-trigger" href="#modal">
+              <i class="small material-icons" style="font-size:40px">help_outline</i>
+          </a>
         </div>
-        <input type="hidden" id= "img{{idx}}" name="{{photo.pk}}" value="{{ photo.pk }}" >
-        {% if idx < 7 %}
+        <div class = "row">
+          <div class="col s6 m6 l6">
+            <img id="original" src="/media/{{ photo.crab.sample_num }}/untitled{{ photo.get_img_num }}_resize.png"/>
+          </div>
+          <div class="col s6 m6 l6">
+            <img id="binarized{{idx}}" src="/media/{{ photo.crab.sample_num }}/untitled{{ photo.get_img_num }}_label.png"/>
+          </div>
+          <input type="hidden" id= "img{{idx}}" name="{{photo.pk}}" value="{{ photo.pk }}" >
+        </div>
+        {% if idx < total|add:"-1" %}
           <a class="waves-effect waves-light btn deep-orange lighten-1" id="next" onclick= "nextImg()">Next</a>
         {% else %}
           <a class="waves-effect waves-light btn deep-orange lighten-1" id="submit" href="{% url 'crabgame:result' session_id %}" >Submit</a>
@@ -56,6 +62,7 @@
     {% endfor %}
 
   </div>
+  <input type = "hidden" id= "total_images" value = "{{ total }}">
 
   <!-- Modal Pop Up Instructions -->
   <div id="modal" class="modal">
@@ -64,7 +71,7 @@
         <p>
           Identify and click on all of the <b>good oocytes</b> on the labeled image on the right side.  
           Looking at the original, microscope image on the left, a good oocyte is one that is both 
-          <b>dark and mostly circular</b>. Once a good oocyte on the left has been identified, 
+          <b>dark and mostly circular</b>. Once a good ocyte on the left has been identified, 
           click on the corresponding oocyte on the right side image to mark it. 
         </p>
         <p>

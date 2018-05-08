@@ -13,6 +13,7 @@ def index(request):
         playSessionInstance.save()
         photos = playSessionInstance.setPhotos()
         total = len(photos)
+        print("Total = " + str(total))
         return render(request, 'crabgame/playCrabImg.html', {'photos': enumerate(photos), 'total': total, 'session_id': playSessionInstance.id})
     return render(request, 'crabgame/index.html')
 
