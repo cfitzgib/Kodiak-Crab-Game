@@ -33,6 +33,7 @@ nav {
   height: 535px;
   width: 100%;
   background: url("/static/crabgame/img/crabs1.jpg") no-repeat;
+  background-size: 100%;
   opacity: 0.9; 
 }
 
@@ -41,8 +42,8 @@ nav {
 }
 
 #content {
-  margin-right: 100px;
-  margin-left: 100px;
+  margin-right: 5%;
+  margin-left: 5%;
 }
 
 h4 {
@@ -50,17 +51,25 @@ h4 {
 }
 
 #aboutGame {
-line-height: 1.8;
-text-align: justify;
+  line-height: 1.8;
+  text-align: justify;
 }
 
 #images {
-  padding-left: 14%;
   margin-top: 3%;
 }
 
+#img1, #img2 {
+  display: block;
+  margin-left: auto;
+}
+
 #contactRow {
-  margin: 50px;
+  margin-bottom: 0px;
+  padding-bottom: 2%;
+  padding-top: 2%;
+  padding-right: 5%;
+  padding-left: 5%;
 }
 
 a:hover {
