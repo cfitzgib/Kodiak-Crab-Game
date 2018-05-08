@@ -195,12 +195,12 @@ class PlaySession(models.Model):
     # create a list of 12 photos with random images for user to play when PlaySession instance is created
     def setPhotos(self):
         allCrabs = list(Crab.objects.all())
-        crabList = random.sample(allCrabs, 4) # pick 4 random crabs per PlaySession 
+        crabList = random.sample(allCrabs, min(10, len(allCrabs))) # pick 4 random crabs per PlaySession 
         
         photos = []
         for i in range (0, len(crabList)):
             images = list(crabList[i].image_set.all()) # look at all images from one crab of crabList
-            playImg = random.sample(images, 2) # pick 3 random images from each crab
+            playImg = random.sample(images, min(2, len(images))) # pick at most 2 random images from each crab
             for j in range (0, len(playImg)):
                 photos.append(playImg[j])
                 psi = PlaySessionImage(image = playImg[j], session = self)

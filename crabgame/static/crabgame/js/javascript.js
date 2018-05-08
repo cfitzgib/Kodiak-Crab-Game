@@ -1,4 +1,11 @@
 var i = 0;
+var total;
+
+//Load in total images
+$(document).ready(function() {
+  total = $("#total_images").val();
+  console.log(total);
+});
 
 //Get the next image and submit all of the oocytes from the last image
 function nextImg() {
@@ -13,13 +20,13 @@ function nextImg() {
     $('#block' + Math.floor(clicked[j][0])).remove();
   }
   clicked = [];
-  if(i<8)
+  if(i<total)
     hide_inactive_images();
 }
 
 //Hide all of the inactive divs and only show current one
 function hide_inactive_images(){
-  for(let j = 0; j < 8; j++){
+  for(let j = 0; j < total; j++){
     if(j != i)
       $("#image" + j).hide();
     else
@@ -35,7 +42,7 @@ $(document).ready(function() {
 var clicked = [];
 $(document).ready(function() {
   //Attach a handler to each of the images for when they become visible
-  for(let k = 0; k< 8; k++){
+  for(let k = 0; k< total; k++){
     $("#binarized"+k).on("click", function(event) {
         var offsetL = this.offsetLeft;
         var offsetT = this.offsetTop;
@@ -81,7 +88,6 @@ $(document).ready(function() {
                 );
               }  
               else{
-                console.log(clicked.length);
                 $('#block' + Math.floor(data.xcenter)).text(clicked.length);
                 $('#block' + Math.floor(data.xcenter)).toggle();
 
