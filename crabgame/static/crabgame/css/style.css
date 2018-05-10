@@ -23,6 +23,7 @@ nav {
 
 #nav-content {
   width: 100%;
+  padding-left: 3%;
 }
 
 #adminlogin, #socratalogin {
@@ -33,7 +34,8 @@ nav {
 }
 
 #startScreen {
-  height: 535px; 
+  /* height: 535px;  */
+  height: 83vh;
   width: 100%;
   background: url("/static/crabgame/img/crabs1.jpg") no-repeat;
   background-size: 100%;
@@ -41,7 +43,8 @@ nav {
 }
 
 #intro {
-  width: 60%;
+  width: 800px;
+  padding-top: 3%;
 }
 
 #content {
@@ -58,13 +61,14 @@ h4 {
   text-align: justify;
 }
 
-#images {
-  margin-top: 3%;
+.light {
+  width: 90%;
+  margin: auto;
 }
 
-#img1, #img2 {
+#img1, #img2, #img3 {
   display: block;
-  margin-left: auto;
+  margin: auto;
 }
 
 #contactRow {
@@ -89,11 +93,26 @@ i.material-icons {
   margin-bottom: 0px;
 }
 
+.original, .binarized {
+  display: block;
+  margin: auto;
+}
+
 #next, #submit {
   margin-top: 40px;
   margin-left: 85%;
   padding-left: 40px;
   padding-right: 40px;
 }
+
+#legend {
+  height: 100%;
+}
+
+#legendtext {
+  width: 90%;
+  margin: auto;
+}
+
 
 

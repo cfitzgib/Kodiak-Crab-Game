@@ -54,23 +54,25 @@
       <input type="hidden" id="sc{{idx}}" value="{{crab.shell_condition}}">
     {% endfor %}
     <input type="hidden" id="length" value="{{crabCount}}">
-    <div class="container deep-purple lighten-3" style="height:83%; width:100%;">
+    <div class="container deep-purple lighten-3" style="height:100%; width:100%;">
       <div class = "row" style="height:100%; width:100%; margin-bottom: 0px;">
         <div id="map" class = "col s8"></div>
         <div id = "legend" class = "col s4">  
+          <div id="legendtext">
             <h5>Thanks for contributing to the Kodiak Lab Shellfish Assessment Program crab research efforts!</h5>
             <p>Your data will be used to help determine the effects of global warming on crabs throughout the Bering Sea.</p>
-            <p>On the map, you can see the location of the crabs you helped analyze during the game. Hover over each marker on the map to see the crab's water temperature (&#8451) they were collected in and its shell condition</p>
+            <p>On the map, you can see the location of the crabs you helped analyze during the game. Hover over each marker on the map to see the crab's water temperature (&#8451) they were collected in and its shell condition.</p>
             <p>A crab's shell condition can tell us a lot about their age and also the quality / number of oocytes they will have. The higher a crab's shell condition, the older they are. They will have blurrier and fewer oocytes. A 5 is the maximum and 2 is the minimum.</p>
             <br>
             <div id="playAgain" class="center-align">
             <form method="post" action="">{% csrf_token %}
                 <button id="playAgainBtn" class="btn-large waves-effect deep-orange lighten-1" type="submit">Play Again</button>
             </form>
-            </div>
+          </div>
         </div>
       </div>
     </div>
+  </div>
   
 
   <script>

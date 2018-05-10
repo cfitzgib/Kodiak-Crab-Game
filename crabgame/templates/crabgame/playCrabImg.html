@@ -40,10 +40,10 @@
             <i class="small material-icons" style="font-size:40px">help_outline</i>
         </a>
         <div class="col s6 m6 l6">
-          <img id="original" src="/media/{{ photo.crab.sample_num }}/untitled{{ photo.get_img_num }}_resize.png"/>
+          <img id="original" class="original" src="/media/{{ photo.crab.sample_num }}/untitled{{ photo.get_img_num }}_resize.png"/>
         </div>
         <div class="col s6 m6 l6">
-          <img id="binarized{{idx}}" src="/media/{{ photo.crab.sample_num }}/untitled{{ photo.get_img_num }}_label.png"/>
+          <img id="binarized{{idx}}" class="binarized" src="/media/{{ photo.crab.sample_num }}/untitled{{ photo.get_img_num }}_label.png"/>
         </div>
         <input type="hidden" id= "img{{idx}}" name="{{photo.pk}}" value="{{ photo.pk }}" >
         {% if idx < 7 %}
