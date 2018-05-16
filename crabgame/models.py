@@ -26,7 +26,7 @@ class Crab(models.Model):
     def send_crab_data(self):
         CONVERSION_RATE = .00000701549
         oocytes = Oocyte.objects.filter(crab=self).filter(chosen_count=10)
-        client = Socrata("noaa-fisheries-afsc.data.socrata.com", "q3DhSQxvyWbtq1kLPs5q7jwQp",  username="cfitzgib@andrew.cmu.edu", password = "Kodiak18!")
+        client = Socrata("noaa-fisheries-afsc.data.socrata.com", "q3DhSQxvyWbtq1kLPs5q7jwQp",  username="<USERNAME>", password = "<PASSWORD>")
         data = {'area_2': '',
                  'area_5': '', 
                  'calibration_5x': 0.00028, 
@@ -68,7 +68,7 @@ class Crab(models.Model):
                 sn = int(folder)
                 #If the crab is not already in the system, then create it
                 if(Crab.objects.filter(sample_num = sn).count() == 0):
-                    client = Socrata("noaa-fisheries-afsc.data.socrata.com", "q3DhSQxvyWbtq1kLPs5q7jwQp",  username="cfitzgib@andrew.cmu.edu", password = "Kodiak18!")
+                    client = Socrata("noaa-fisheries-afsc.data.socrata.com", "q3DhSQxvyWbtq1kLPs5q7jwQp",   username="<USERNAME>", password = "<PASSWORD>")
                     crab_info = client.get("n49y-v5db", where=("sample = " + str(sn)))
                     lat, lon = crab_info[0]['location_1']['latitude'], crab_info[0]['location_1']['longitude']
                     yr, wt = crab_info[0]['year'], crab_info[0]['bottom_temp_c']
